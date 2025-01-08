@@ -128,6 +128,19 @@ export const appConfig: ApplicationConfig = {
   };
 
 ```
+ 
+Die Datei silent-check-sso.html muss im public-Ordner deines Angular-Projekts liegen und folgenden Inhalt haben:
+
+```html
+<!doctype html>
+<html>
+<body>
+    <script>
+        parent.postMessage(location.href, location.origin);
+    </script>
+</body>
+</html>
+```
 
 
 Der Benutzer, mit dem ihr eure Integration testen könnt, hat den Benutzernamen user und das Passwort test. Die einzige Rolle heißt user.
