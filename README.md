@@ -68,8 +68,7 @@ zunächst auf eine Seite im Firmendesign mit Informationen über die verschieden
 befindet sich ein Link zum Employee-Management-Service. Klickt der Benutzer auf diesen Link und ist noch nicht angemeldet, wird er zum Login des bereits
 existierenden Keycloak-Service weitergeleitet, loggt sich dort ein und wird zum Frontend des Employee Management Services zurückgeleitet. Nach dem Logout
 wird der Benutzer wieder zur Startseite mit den Informationen über die Anwendungen der HiTec GmbH zurückgeleitet.
-Für die Keycloak-Integration benötigst du die Bibliotheken keycloak-angular und keycloak-js. Beide sind im Starter-Projekt schon enthalten (siehe package.json),
-brauchen also nicht mehr per npm install hinzugefügt werden. Eine Dokumentation der Bibliotheken findest du hier https://www.npmjs.com/package/keycloak-angular.
+Für die Keycloak-Integration benötigst du die Bibliotheken keycloak-angular und keycloak-js. Eine Dokumentation der Bibliotheken findest du hier https://www.npmjs.com/package/keycloak-angular.
 
 Um den vorhandenen Keycloak-Service in deine Anwendung integrieren zu können, benötigst du folgende Informationen:
 
