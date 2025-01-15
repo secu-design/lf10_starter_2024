@@ -31,7 +31,7 @@ export class EmployeeService {
 
     this.http.get<Employee[]>('http://localhost:8089/employees', { headers }).subscribe(
       (employees) => {
-        this.employeesSubject.next(employees); // Update the BehaviorSubject
+        this.employeesSubject.next(employees);
       },
       (error) => {
         console.error('Failed to fetch employees', error);
