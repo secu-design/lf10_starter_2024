@@ -13,7 +13,6 @@ import {EmployeeService} from "../employee.service";
   styleUrl: './employee-list.component.css'
 })
 export class EmployeeListComponent {
-  bearer: string = '';
   employees$: Observable<Employee[]>;
 
   constructor(

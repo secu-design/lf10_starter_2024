@@ -1,1 +1,8 @@
-<p>qualifikations works!</p>
+<h2>Qualifications</h2>
+<ul>
+  @for (e of qualifications$ | async; track e.skill) {
+    <li>
+      {{ e.id }} - {{ e.skill }}
+    </li>
+  }
+</ul>
