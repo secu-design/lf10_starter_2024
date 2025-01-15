@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Employee} from "../Employee";
-import {KeycloakService} from "keycloak-angular";
+import {EmployeeService} from "../employee-service.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -18,25 +18,11 @@ export class EmployeeListComponent {
 
   constructor(
     private http: HttpClient,
-    private keycloakService: KeycloakService) {
-    this.employees$ = of([]);
-    this.init();
+    private employeeService: EmployeeService) {
+    this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
   }
 
-  async init() {
-    try {
-      this.bearer = await this.keycloakService.getToken();
-      this.fetchData();
-    } catch (error) {
-      console.error('Failed to get token', error);
-    }
-  }
-
-  fetchData() {
-    this.employees$ = this.http.get<Employee[]>('http://localhost:8089/employees', {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json')
-        .set('Authorization', `Bearer ${this.bearer}`)
-    });
+  ngOnInit(): void {
+    this.employeeService.loadData(); // Load the data when the component initializes
   }
 }
