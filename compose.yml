@@ -5,7 +5,7 @@ volumes:
 services:
   postgres-employee:
     container_name: postgres_employee
-    image: postgres:latest
+    image: postgres:13.3
     volumes:
       - employee_postgres_data:/var/lib/postgresql/data
     environment:
