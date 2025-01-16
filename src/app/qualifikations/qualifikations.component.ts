@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {QualificationService} from "../qualification.service";
+import {QualificationService} from "../service/qualification.service";
 import {AsyncPipe} from "@angular/common";
 import {Qualification} from "../Qualification";
 
@@ -21,7 +21,7 @@ export class QualifikationsComponent {
   constructor(
     private http: HttpClient,
     private qualificationService: QualificationService) {
-    this.qualifications$ = this.qualificationService.getEmployees(); // Use the service to get employees
+    this.qualifications$ = this.qualificationService.getQualifications(); // Use the service to get employees
   }
 
   ngOnInit(): void {
