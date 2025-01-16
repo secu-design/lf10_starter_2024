@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {QualificationService} from "../service/qualification.service";
 import {AsyncPipe} from "@angular/common";
 import {Qualification} from "../Qualification";
 
 @Component({
-  selector: 'app-qualifikations',
+  selector: 'app-qualifications',
   standalone: true,
   imports: [
     AsyncPipe
   ],
-  templateUrl: './qualifikations.component.html',
-  styleUrl: './qualifikations.component.css'
+  templateUrl: './qualifications.component.html',
+  styleUrl: './qualifications.component.css'
 })
-export class QualifikationsComponent {
-  bearer: string = '';
+export class QualificationsComponent {
   qualifications$: Observable<Qualification[]>;
 
   constructor(
-    private http: HttpClient,
     private qualificationService: QualificationService) {
     this.qualifications$ = this.qualificationService.getQualifications(); // Use the service to get employees
   }

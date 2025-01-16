@@ -10,7 +10,9 @@ import {TokenService} from "./token.service";
 export class QualificationService {
   private qualificationsSubject: BehaviorSubject<Qualification[]> = new BehaviorSubject<Qualification[]>([]);
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService) {
   }
 
   //refresh the qualification list
@@ -32,7 +34,6 @@ export class QualificationService {
       );
     });
   }
-
 
   // HTTP call to create qualifications
   public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
@@ -59,7 +60,6 @@ export class QualificationService {
     return null;
   }
 
-
 // HTTP call to delete a qualification
   public delete(skillId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
@@ -79,10 +79,8 @@ export class QualificationService {
     });
   }
 
-
   // Get the observable that components can subscribe to
   getQualifications(): Observable<Qualification[]> {
     return this.qualificationsSubject.asObservable();
   }
-
 }

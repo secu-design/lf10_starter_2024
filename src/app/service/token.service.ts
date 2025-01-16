@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { KeycloakService } from 'keycloak-angular';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -13,21 +13,26 @@ export class TokenService {
     this.loadToken(); // Load token on service initialization
   }
 
+  // Public method to get the current token as a string
+  async getToken(): Promise<string> {
+    // Refresh the token if needed
+    const isTokenExpired = this.keycloakService.isTokenExpired();
+    if (isTokenExpired) {
+      await this.refreshToken();
+    }
+    return this.bearerToken;
+  }
+
+  // Observable for token changes
+  getTokenObservable() {
+    return this.tokenSubject.asObservable();
+  }
+
   // Load the token and update the BehaviorSubject
   private async loadToken() {
     const token = await this.keycloakService.getToken();
     this.bearerToken = token;
     this.tokenSubject.next(token);
-  }
-
-  // Public method to get the current token as a string
-  async getToken(): Promise<string> {
-    // Refresh the token if needed
-    const isTokenExpired = await this.keycloakService.isTokenExpired();
-    if (isTokenExpired) {
-      await this.refreshToken();
-    }
-    return this.bearerToken;
   }
 
   // Refresh the token
@@ -36,10 +41,5 @@ export class TokenService {
     const token = await this.keycloakService.getToken();
     this.bearerToken = token;
     this.tokenSubject.next(token);
-  }
-
-  // Observable for token changes
-  getTokenObservable() {
-    return this.tokenSubject.asObservable();
   }
 }

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {Employee} from "../Employee";
 import {EmployeeService} from "../service/employee.service";
 
@@ -16,7 +15,6 @@ export class EmployeeListComponent {
   employees$: Observable<Employee[]>;
 
   constructor(
-    private http: HttpClient,
     private employeeService: EmployeeService) {
     this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
   }

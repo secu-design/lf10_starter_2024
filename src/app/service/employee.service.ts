@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Employee } from '../Employee';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Employee} from '../Employee';
 import {TokenService} from "./token.service";
 
 @Injectable({
@@ -10,7 +10,10 @@ import {TokenService} from "./token.service";
 export class EmployeeService {
   private employeesSubject: BehaviorSubject<Employee[]> = new BehaviorSubject<Employee[]>([]);
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService) {
+  }
 
   //refresh the employee list
   loadData(onSuccess?: (createdEmployee: Employee[]) => void, onError?: (error: any) => void): void {
@@ -19,7 +22,7 @@ export class EmployeeService {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
 
-      this.http.get<Employee[]>('http://localhost:8089/employees', { headers }).subscribe(
+      this.http.get<Employee[]>('http://localhost:8089/employees', {headers}).subscribe(
         (employees) => {
           this.employeesSubject.next(employees);
           if (onSuccess) onSuccess(employees);
@@ -30,7 +33,6 @@ export class EmployeeService {
       );
     });
   }
-
 
   // HTTP call to create qualifications
   public post(employee: Employee, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): Employee | null {
@@ -52,7 +54,6 @@ export class EmployeeService {
     return null;
   }
 
-
 // HTTP call to delete a qualification
   public delete(employeeId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
@@ -72,10 +73,8 @@ export class EmployeeService {
     });
   }
 
-
   // Get the observable that components can subscribe to
   getEmployees(): Observable<Employee[]> {
     return this.employeesSubject.asObservable();
   }
-
 }
