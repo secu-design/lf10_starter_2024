@@ -42,12 +42,36 @@ export class QualificationService {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
 
-      // Add the skill parameter to the request body
       const body = {
         skill: skill,
       };
 
       this.http.post<Qualification>('http://localhost:8089/qualifications', body, {headers}).subscribe(
+        (qualification) => {
+          if (onSuccess) onSuccess(qualification);
+          return qualification;
+        },
+        (error) => {
+          if (onError) onError(error);
+        }
+      );
+    });
+    return null;
+  }
+
+
+  // HTTP call to update qualifications
+  public put(employeeId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
+    this.tokenService.getToken().then((token: string) => {
+      const headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`);
+
+      const body = {
+        skill: skill,
+      };
+
+      this.http.put<Qualification>(`http://localhost:8089/qualifications/${employeeId}`, body, {headers}).subscribe(
         (qualification) => {
           if (onSuccess) onSuccess(qualification);
           return qualification;

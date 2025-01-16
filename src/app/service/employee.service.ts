@@ -34,7 +34,7 @@ export class EmployeeService {
     });
   }
 
-  // HTTP call to create qualifications
+  // HTTP call to create employees
   public post(employee: Employee, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): Employee | null {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
@@ -54,7 +54,27 @@ export class EmployeeService {
     return null;
   }
 
-// HTTP call to delete a qualification
+  // HTTP call to update employees
+  public put(employeeId: number, employee: Employee, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): Employee | null {
+    this.tokenService.getToken().then((token: string) => {
+      const headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`);
+
+      this.http.put<Employee>(`http://localhost:8089/employees/${employeeId}`, employee, {headers}).subscribe(
+        (employee) => {
+          if (onSuccess) onSuccess(employee);
+          return employee;
+        },
+        (error) => {
+          if (onError) onError(error);
+        }
+      );
+    });
+    return null;
+  }
+
+// HTTP call to delete an employee
   public delete(employeeId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
