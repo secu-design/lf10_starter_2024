@@ -1,8 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 /*# = id | . = class*/
-.round_20{
-  border-radius: 20%;
+.round_4{
+  border-radius: 4px;
 }
 
-
-
+li{
+  width: auto;
+  height: 0px;
+  background-color: black;
+  border: black solid 2px;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
