@@ -21,7 +21,6 @@ export class QualificationService {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
-      let list: Qualification[];
       this.http.get<Qualification[]>('http://localhost:8089/qualifications', {headers}).subscribe(
         (qualifications) => {
           this.qualificationsSubject.next(qualifications);
