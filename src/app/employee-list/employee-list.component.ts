@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../Employee";
-import {EmployeeService} from "../employee.service";
+import {EmployeeService} from "../service/employee.service";
 
 @Component({
   selector: 'app-employee-list',

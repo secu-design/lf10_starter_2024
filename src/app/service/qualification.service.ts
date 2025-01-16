@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Qualification} from '../Qualification';
 import {TokenService} from "./token.service";
-import {Employee} from "../Employee";
 
 @Injectable({
   providedIn: 'root',
@@ -15,33 +14,29 @@ export class QualificationService {
   }
 
   //refresh the qualification list
-   loadData(onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void) {
+  loadData(
+    onSuccess?: (qualifications: Qualification[]) => void,
+    onError?: (error: any) => void) {
     this.tokenService.getToken().then((token: string) => {
-      this.fetchQualifications(token);
-    }).catch((error) => {
-      console.error('Failed to get token', error);
+      const headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`);
+      let list: Qualification[];
+      this.http.get<Qualification[]>('http://localhost:8089/qualifications', {headers}).subscribe(
+        (qualifications) => {
+          this.qualificationsSubject.next(qualifications);
+          if (onSuccess) onSuccess(qualifications);
+        },
+        (error) => {
+          if (onError) onError(error);
+        }
+      );
     });
-  }
-
-  // HTTP call to fetch qualifications
-  private fetchQualifications(token: string): void {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`);
-
-    this.http.get<Qualification[]>('http://localhost:8089/qualifications', {headers}).subscribe(
-      (qualification) => {
-        this.qualificationsSubject.next(qualification);
-      },
-      (error) => {
-        console.error('Failed to fetch qualifications', error);
-      }
-    );
   }
 
 
   // HTTP call to create qualifications
-  public post(skill: string, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): Qualification | null {
+  public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -54,10 +49,11 @@ export class QualificationService {
 
       this.http.post<Qualification>('http://localhost:8089/qualifications', body, {headers}).subscribe(
         (qualification) => {
+          if (onSuccess) onSuccess(qualification);
           return qualification;
         },
         (error) => {
-          console.error('Failed to create qualifications', error);
+          if (onError) onError(error);
         }
       );
     });
@@ -66,7 +62,7 @@ export class QualificationService {
 
 
 // HTTP call to delete a qualification
-  public delete(skillId: number, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): void {
+  public delete(skillId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -75,10 +71,10 @@ export class QualificationService {
       this.http.delete<void>(`http://localhost:8089/qualifications/${skillId}`, {headers})
         .subscribe(
           () => {
-            console.log(`Qualification with ID ${skillId} deleted successfully.`);
+            if (onSuccess) onSuccess();
           },
           (error) => {
-            console.error(`Failed to delete qualification with ID ${skillId}`, error);
+            if (onError) onError(error);
           }
         );
     });
