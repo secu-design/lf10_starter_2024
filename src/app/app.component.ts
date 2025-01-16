@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EmployeeListComponent} from "./employee-list/employee-list.component";
-import {QualificationsComponent} from "./qualifikations/qualifications.component";
+import {QualificationsComponent} from "./qualifications/qualifications.component";
 
 @Component({
   selector: 'app-root',
