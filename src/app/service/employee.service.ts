@@ -13,29 +13,24 @@ export class EmployeeService {
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   //refresh the employee list
-  loadData(onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): void {
+  loadData(onSuccess?: (createdEmployee: Employee[]) => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token) => {
-      this.fetchEmployees(token);
-    }).catch((error) => {
-      console.error('Failed to get token', error);
+      const headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`);
+
+      this.http.get<Employee[]>('http://localhost:8089/employees', { headers }).subscribe(
+        (employees) => {
+          this.employeesSubject.next(employees);
+          if (onSuccess) onSuccess(employees);
+        },
+        (error) => {
+          if (onError) onError(error);
+        }
+      );
     });
   }
 
-  // HTTP call to fetch employees
-  private fetchEmployees(token: string): void {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`);
-
-    this.http.get<Employee[]>('http://localhost:8089/employees', { headers }).subscribe(
-      (employees) => {
-        this.employeesSubject.next(employees);
-      },
-      (error) => {
-        console.error('Failed to fetch employees', error);
-      }
-    );
-  }
 
   // HTTP call to create qualifications
   public post(employee: Employee, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): Employee | null {
@@ -45,11 +40,12 @@ export class EmployeeService {
         .set('Authorization', `Bearer ${token}`);
 
       this.http.post<Employee>('http://localhost:8089/employees', employee, {headers}).subscribe(
-        (qualification) => {
-          return qualification;
+        (employee) => {
+          if (onSuccess) onSuccess(employee);
+          return employee;
         },
         (error) => {
-          console.error('Failed to create employee', error);
+          if (onError) onError(error);
         }
       );
     });
@@ -58,7 +54,7 @@ export class EmployeeService {
 
 
 // HTTP call to delete a qualification
-  public delete(employeeId: number, onSuccess?: (createdEmployee: Employee) => void, onError?: (error: any) => void): void {
+  public delete(employeeId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -67,10 +63,10 @@ export class EmployeeService {
       this.http.delete<void>(`http://localhost:8089/employees/${employeeId}`, {headers})
         .subscribe(
           () => {
-            console.log(`Employees with ID ${employeeId} deleted successfully.`);
+            if (onSuccess) onSuccess();
           },
           (error) => {
-            console.error(`Failed to delete employee with ID ${employeeId}`, error);
+            if (onError) onError(error);
           }
         );
     });
