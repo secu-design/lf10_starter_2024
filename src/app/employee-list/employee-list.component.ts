@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
 import {Employee} from "../Employee";
 import {EmployeeService} from "../service/employee.service";
+import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -15,8 +16,17 @@ export class EmployeeListComponent {
   employees$: Observable<Employee[]>;
 
   constructor(
-    private employeeService: EmployeeService) {
+    private employeeService: EmployeeService,
+    private employeeDetailService: EmployeeDetailService) {
     this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
+  }
+
+  onRowClick(employee: any) {
+    this.employeeDetailService.setSelectedEmployee(employee);
+  }
+
+  trackById(index: number, item: any): number {
+    return item.id;
   }
 
   ngOnInit(): void {
