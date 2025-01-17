@@ -2,12 +2,10 @@
   <h2 style="text-align: center">Mitarbeiter</h2>
   <li></li>
   <table style="width: fit-content;">
-    @for (e of employees$ | async; track e.id) {
-      <tr>
-        <td>{{ e.lastName }} {{ e.firstName }}</td>
-        <td><input type="checkbox" style="padding-left: 2px"></td>
-      </tr>
-    }
+    <tr (click)="onRowClick(e)" *ngFor="let e of employees$ | async; trackBy: trackById">
+      <td>{{ e.lastName }} {{ e.firstName }}</td>
+      <td><input type="checkbox" style="padding-left: 2px"></td>
+    </tr>
   </table>
   <li></li>
   <div style="align-content: center">

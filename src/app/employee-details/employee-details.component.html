@@ -7,19 +7,19 @@
       <tbody>
       <tr>
         <td>Straße:</td>
-        <td>{{ employee.street }}</td>
+        <td>{{ employee?.street }}</td>
       </tr>
       <tr>
         <td>PLZ:</td>
-        <td>{{ employee.postcode }}</td>
+        <td>{{ employee?.postcode }}</td>
       </tr>
       <tr>
         <td>Stadt:</td>
-        <td>{{ employee.city }}</td>
+        <td>{{ employee?.city }}</td>
       </tr>
       <tr>
         <td>Telefon:</td>
-        <td>{{ employee.phone }}</td>
+        <td>{{ employee?.phone }}</td>
       </tr>
       </tbody>
     </table>
@@ -32,7 +32,7 @@
     <div class="overflow-auto" style="max-height: 200px;">
       <ul class="list-group">
         <app-qualification-list-row
-          *ngFor="let qualification of employee.skillSet"
+          *ngFor="let qualification of employee?.skillSet"
           [skill]="qualification.skill">
         </app-qualification-list-row>
       </ul>
