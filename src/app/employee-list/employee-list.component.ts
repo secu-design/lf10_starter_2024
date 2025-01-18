@@ -12,7 +12,8 @@ import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent
+{
   employees$: Observable<Employee[]>;
 
   constructor(
@@ -25,7 +26,7 @@ export class EmployeeListComponent {
     this.employeeDetailService.setSelectedEmployee(employee);
   }
 
-  trackById(index: number, item: any): number {
+  trackById(item: any): number {
     return item.id;
   }
 

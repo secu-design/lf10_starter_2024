@@ -4,7 +4,6 @@ import {Employee} from "../Employee";
 import {NgForOf} from "@angular/common";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 
-
 @Component({
   selector: 'app-employee-details',
   standalone: true,
@@ -15,20 +14,17 @@ import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.css'
 })
-export class EmployeeDetailsComponent {
-
-  constructor(private employeeDetailService: EmployeeDetailService){
-
-  }
-
+export class EmployeeDetailsComponent
+{
   @Input() employee: Employee | null = null;
 
+  constructor(private employeeDetailService: EmployeeDetailService) {
+  }
 
   ngOnInit(): void {
     this.employeeDetailService.selectedEmployee$.subscribe((employee) => {
       this.employee = employee;
     });
   }
-
 }
 

@@ -2,8 +2,8 @@
   <h2 style="text-align: center">Mitarbeiter</h2>
   <li></li>
   <table style="width: fit-content;">
-    <tr (click)="onRowClick(e)" *ngFor="let e of employees$ | async; trackBy: trackById">
-      <td>{{ e.lastName }} {{ e.firstName }}</td>
+    <tr (click)="onRowClick(employee)" *ngFor="let employee of employees$ | async; trackBy: trackById">
+      <td>{{ employee.lastName }} {{ employee.firstName }}</td>
       <td><input type="checkbox" style="padding-left: 2px"></td>
     </tr>
   </table>
