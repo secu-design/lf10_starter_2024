@@ -1,23 +1,20 @@
+.container{
+  margin: 20px;
+}
+
+.box-outside{
+  display: inline-flex;
+  gap: 20px;
+}
+
+.box-address {
+  width: 250px;
+}
+
+.box-employee-qualifications {
+  width: 175px;
+}
+
 th, td {
   padding-right: 15px;
 }
-
-.box-employee-details{
-  margin: 20px;
-  padding: 20px;
-  background: white;
-  border: rgba(0, 0, 0, 0.2) solid 1px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  width: 350px;
-}
-
-.frame-simple {
-  padding: 7px;
-  background: lightgrey;
-  border: rgba(0, 0, 0, 0.05) solid 1px;
-  border-radius: 5px;
-  width: 100%;
-}
-
-

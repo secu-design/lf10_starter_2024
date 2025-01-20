@@ -1,6 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 /*# = id | . = class*/
 
-.round_4 {
-  border-radius: 4px;
+.frame-boxes-outside{
+  padding: 14px;
+  background: white;
+  border: rgba(0, 0, 0, 0.2) solid 1px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-size: 0.8em;
+}
+
+.frame-boxes-inside {
+  padding: 7px;
+  background: lightgrey;
+  border: rgba(0, 0, 0, 0.05) solid 1px;
+  border-radius: 5px;
 }
