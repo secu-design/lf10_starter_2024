@@ -3,12 +3,14 @@ import {Observable} from "rxjs";
 import {QualificationService} from "../service/qualification.service";
 import {AsyncPipe} from "@angular/common";
 import {Qualification} from "../Qualification";
+import {QualificationListRowComponent} from "../qualification-list-row/qualification-list-row.component";
 
 @Component({
   selector: 'app-qualifications',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    QualificationListRowComponent
   ],
   templateUrl: './qualifications.component.html',
   styleUrl: './qualifications.component.css'

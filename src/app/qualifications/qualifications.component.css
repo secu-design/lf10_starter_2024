@@ -1,0 +1,21 @@
+.container{
+  margin: 20px;
+}
+
+.box-outside{
+  display: inline-flex;
+  gap: 20px;
+}
+
+.box-qualifications {
+  width: 175px;
+}
+
+.box-editing {
+  width: 175px;
+}
+
+.btn-group-qualifications{
+  display: flex;
+  justify-content: flex-end;
+}

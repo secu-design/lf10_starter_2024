@@ -1,8 +1,39 @@
-<h2>Qualifications</h2>
-<ul>
-  @for (e of qualifications$ | async; track e.skill) {
-    <li>
-      {{ e.id }} - {{ e.skill }}
-    </li>
-  }
-</ul>
+<div class="container">
+  <p><b>Qualifikationen bearbeiten:</b></p>
+
+  <div class="frame-boxes-outside box-outside">
+
+    <div class="frame-boxes-inside box-qualifications">
+      <div class="overflow-auto" style="max-height: 200px;">
+        <ul class="list-group">
+          @for (employee of qualifications$ | async; track employee.skill) {
+            <app-qualification-list-row
+              [skill]="employee.skill">
+            </app-qualification-list-row>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="frame-boxes-inside box-editing">
+
+      <div class="input-group input-group-sm mb-3">
+        <input aria-describedby="inputGroup-sizing-sm"
+               class="form-control"
+               id="new-qualification"
+               placeholder="Neue Qualifikation"
+               type="text">
+      </div>
+
+      <div class="btn-group-qualifications">
+        <div class="btn-group btn-group-sm" role="group">
+          <button class="btn btn-danger" id="btn-add-general-qualification" type="button">Remove</button>
+          <button class="btn btn-success" id="btn-rm-general-qualification" type="button">Add</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
