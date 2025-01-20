@@ -1,43 +1,50 @@
-<div class="box-employee-details">
+<div class="container">
+<p><b>Details</b></p>
 
-  <p>Adresse:</p>
+  <div class="frame-boxes-outside box-outside">
 
-  <div class="frame-simple">
-    <table>
-      <tbody>
-      <tr>
-        <td>Straße:</td>
-        <td>{{ employee?.street }}</td>
-      </tr>
-      <tr>
-        <td>PLZ:</td>
-        <td>{{ employee?.postcode }}</td>
-      </tr>
-      <tr>
-        <td>Stadt:</td>
-        <td>{{ employee?.city }}</td>
-      </tr>
-      <tr>
-        <td>Telefon:</td>
-        <td>{{ employee?.phone }}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div>
+      <p>Adresse:</p>
 
-  <br>
-  <p>Qualifikationen:</p>
-
-  <div class="frame-simple">
-    <div class="overflow-auto" style="max-height: 200px;">
-      <ul class="list-group">
-        <app-qualification-list-row
-          *ngFor="let qualification of employee?.skillSet"
-          [skill]="qualification.skill">
-        </app-qualification-list-row>
-      </ul>
+      <div class="frame-boxes-inside box-address">
+        <table>
+          <tbody>
+          <tr>
+            <td>Straße:</td>
+            <td>{{ employee?.street }}</td>
+          </tr>
+          <tr>
+            <td>PLZ:</td>
+            <td>{{ employee?.postcode }}</td>
+          </tr>
+          <tr>
+            <td>Stadt:</td>
+            <td>{{ employee?.city }}</td>
+          </tr>
+          <tr>
+            <td>Telefon:</td>
+            <td>{{ employee?.phone }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <div>
+      <p>Qualifikationen:</p>
+
+      <div class="frame-boxes-inside box-employee-qualifications">
+        <div class="overflow-auto" style="max-height: 200px;">
+          <ul class="list-group">
+            <app-qualification-list-row
+              *ngFor="let qualification of employee?.skillSet"
+              [skill]="qualification.skill">
+            </app-qualification-list-row>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>
-
