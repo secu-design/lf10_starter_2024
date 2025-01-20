@@ -12,7 +12,7 @@
 
 .frame-boxes-inside {
   padding: 7px;
-  background: lightgrey;
+  background: rgba(0, 0, 0, 0.11);
   border: rgba(0, 0, 0, 0.05) solid 1px;
   border-radius: 5px;
 }
