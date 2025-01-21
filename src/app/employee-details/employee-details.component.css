@@ -8,11 +8,12 @@
 }
 
 .box-address {
-  width: 250px;
+  width: 225px;
 }
 
 .box-employee-qualifications {
-  width: 175px;
+  width: 225px;
+  height: 200px;
 }
 
 th, td {
