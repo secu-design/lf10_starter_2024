@@ -5,6 +5,7 @@
 .box-outside{
   display: inline-flex;
   gap: 20px;
+  height: 200px;
 }
 
 .box-qualifications {
@@ -13,6 +14,7 @@
 
 .box-editing {
   width: 175px;
+  height: fit-content;
 }
 
 .btn-group-qualifications{

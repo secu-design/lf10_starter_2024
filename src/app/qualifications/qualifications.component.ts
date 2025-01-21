@@ -15,7 +15,8 @@ import {QualificationListRowComponent} from "../qualification-list-row/qualifica
   templateUrl: './qualifications.component.html',
   styleUrl: './qualifications.component.css'
 })
-export class QualificationsComponent {
+export class QualificationsComponent
+{
   qualifications$: Observable<Qualification[]>;
 
   constructor(
@@ -25,5 +26,16 @@ export class QualificationsComponent {
 
   ngOnInit(): void {
     this.qualificationService.loadData(); // Load the data when the component initializes
+  }
+
+  addQualification(qualification: string) {
+    this.qualificationService.post(qualification)
+    // 1. Wie aktualisiert man das HTML Element automatisch?
+    // 2. Es muss eine Prüfung geben, damit Elemente nicht doppelt hinzugefügt werden. Das sollte der Service
+    // sicherstellen.
+  }
+
+  removeQualification() {
+
   }
 }
