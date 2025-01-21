@@ -16,3 +16,8 @@
   border: rgba(0, 0, 0, 0.05) solid 1px;
   border-radius: 5px;
 }
+
+.box-qualifications{
+  width: 175px;
+  height: 175px;
+}
