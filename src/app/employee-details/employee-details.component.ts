@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {QualificationListRowComponent} from "../qualification-list-row/qualification-list-row.component";
 import {Employee} from "../Employee";
 import {NgForOf} from "@angular/common";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
@@ -8,8 +7,7 @@ import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
   selector: 'app-employee-details',
   standalone: true,
   imports: [
-    QualificationListRowComponent,
-    NgForOf
+    NgForOf,
   ],
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.css'

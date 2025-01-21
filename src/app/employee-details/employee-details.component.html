@@ -36,10 +36,11 @@
       <div class="frame-boxes-inside box-qualifications">
         <div class="overflow-auto" style="max-height: 200px;">
           <ul class="list-group">
-            <app-qualification-list-row
-              *ngFor="let qualification of employee?.skillSet"
-              [skill]="qualification.skill">
-            </app-qualification-list-row>
+            <li
+              class="list-group-item"
+              *ngFor="let qualification of employee?.skillSet">
+              {{ qualification.skill }}
+            </li>
           </ul>
         </div>
       </div>
