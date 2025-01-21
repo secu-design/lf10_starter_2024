@@ -5,11 +5,6 @@
 .box-outside{
   display: inline-flex;
   gap: 20px;
-  height: 200px;
-}
-
-.box-qualifications {
-  width: 175px;
 }
 
 .box-editing {
