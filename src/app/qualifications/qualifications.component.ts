@@ -3,14 +3,12 @@ import {Observable} from "rxjs";
 import {QualificationService} from "../service/qualification.service";
 import {AsyncPipe} from "@angular/common";
 import {Qualification} from "../Qualification";
-import {QualificationListRowComponent} from "../qualification-list-row/qualification-list-row.component";
 
 @Component({
   selector: 'app-qualifications',
   standalone: true,
   imports: [
-    AsyncPipe,
-    QualificationListRowComponent
+    AsyncPipe
   ],
   templateUrl: './qualifications.component.html',
   styleUrl: './qualifications.component.css'
@@ -33,9 +31,5 @@ export class QualificationsComponent
     // 1. Wie aktualisiert man das HTML Element automatisch?
     // 2. Es muss eine Prüfung geben, damit Elemente nicht doppelt hinzugefügt werden. Das sollte der Service
     // sicherstellen.
-  }
-
-  removeQualification() {
-
   }
 }

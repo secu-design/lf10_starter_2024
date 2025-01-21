@@ -6,10 +6,8 @@
     <div class="frame-boxes-inside box-qualifications">
       <div class="overflow-auto" style="max-height: 150px;">
         <ul class="list-group">
-          @for (employee of qualifications$ | async; track employee.skill) {
-            <app-qualification-list-row
-              [skill]="employee.skill">
-            </app-qualification-list-row>
+          @for (qualificationsObservable of qualifications$ | async; track qualificationsObservable.skill) {
+            <li class="list-group-item">{{ qualificationsObservable.skill }}</li>
           }
         </ul>
       </div>
