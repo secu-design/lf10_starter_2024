@@ -16,7 +16,7 @@ import {EditComponent} from "../popUps/edit/edit.component";
 })
 export class EmployeeDetailsComponent
 {
-  @Input() employee: Employee | null = null;
+  @Input() employee: Employee |null = new Employee();
 
   constructor(private employeeDetailService: EmployeeDetailService, public dialog: MatDialog) {
   }
@@ -32,7 +32,7 @@ export class EmployeeDetailsComponent
 
   ngOnInit(): void {
     this.employeeDetailService.selectedEmployee$.subscribe((employee) => {
-      this.employee = employee;
+        this.employee = employee;
     });
   }
 }

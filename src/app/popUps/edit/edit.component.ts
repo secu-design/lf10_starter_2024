@@ -36,7 +36,7 @@ import {EmployeeService} from "../../service/employee.service";
 
 export class EditComponent {
 
-  @Input() employee: Employee = new Employee(0, [], '', '', '', '', '', '');
+  @Input() employee: Employee = new Employee();
    qualifications$: Observable<Qualification[]>;
 
   constructor(
@@ -50,9 +50,8 @@ export class EditComponent {
   }
 
   onSave(): void {
-    const employeeCopy: any = structuredClone(this.employee);
-    employeeCopy.skillSet = this.employee.skillSet.map(qualification => qualification.id);
-    this.employeeService.put(employeeCopy.id, employeeCopy);
+
+    this.employeeService.put(this.employee.id, this.employee);
     this.dialogRef.close(this.data);
   }
 
@@ -65,11 +64,7 @@ export class EditComponent {
       if (employee != null)
         this.employee = employee;
       else
-        this.employee = new Employee(-1, []);
+        this.employee = new Employee();
     });
-
-    this.qualificationService.getQualifications().subscribe((qualifications) => qualifications = qualifications);
   }
-
-
 }
