@@ -21,3 +21,13 @@
   width: 175px;
   height: 175px;
 }
+
+.hr {
+  width: auto;
+  height: 0px;
+  background-color: grey;
+  border: grey solid 2px;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
