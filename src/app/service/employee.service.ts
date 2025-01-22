@@ -41,7 +41,7 @@ export class EmployeeService {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
 
-      this.http.post<Employee>('http://localhost:8089/employees', employee, {headers}).subscribe(
+      this.http.post<Employee>('http://localhost:8089/employees', this.mapEmployee(employee), {headers}).subscribe(
         (employee) => {
           if (onSuccess) onSuccess(employee);
           return employee;
@@ -61,7 +61,7 @@ export class EmployeeService {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
 
-      this.http.put<Employee>(`http://localhost:8089/employees/${employeeId}`, employee, {headers}).subscribe(
+      this.http.put<Employee>(`http://localhost:8089/employees/${employeeId}`, this.mapEmployee(employee), {headers}).subscribe(
         (employee) => {
           if (onSuccess) onSuccess(employee);
           return employee;
@@ -92,6 +92,13 @@ export class EmployeeService {
         );
     });
   }
+
+  private mapEmployee(employee: Employee): any{
+    const employeeCopy: any = structuredClone(employee);
+    employeeCopy.skillSet = employee.skillSet.map(qualification => qualification.id);
+    return employeeCopy;
+  }
+
 
   // Get the observable that components can subscribe to
   getEmployees(): Observable<Employee[]> {
