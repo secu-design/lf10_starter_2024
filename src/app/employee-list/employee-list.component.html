@@ -5,11 +5,12 @@
       <input style="border-radius: 20px" type="search">
     </div>
     <hr>
-    @for (e of employees$ | async; track e.id) {
-      <div class="form-check form-check-reverse" style="margin-left: 4px; margin-right: 4px" id="{{e.id}}-test">
-        <input class="form-check-input" style=" float: right" type="checkbox" value="" id="{{e.id}}" (change)="toggleCheckbox(e.id)">
-        <label class="form-check-label" style=" float: left" for="{{e.id}}">
-          {{ e.lastName }} {{ e.firstName }}
+    @for (employee of employees$ | async; track employee.id) {
+      <div (click)="onRowClick(employee)" class="form-check form-check-reverse" style="margin-left: 4px; margin-right: 4px"
+           id="{{employee.id}}-test">
+        <input class="form-check-input" style=" float: right" type="checkbox" value="" id="{{employee.id}}" (change)="toggleCheckbox(employee.id)">
+        <label class="form-check-label" style=" float: left" for="{{employee.id}}">
+          {{ employee.lastName }} {{ employee.firstName }}
         </label>
       </div>
     }

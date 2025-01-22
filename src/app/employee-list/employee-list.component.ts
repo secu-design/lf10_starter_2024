@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Employee} from "../Employee";
-import {EmployeeService} from "../employee-service.service";
 import {FormsModule} from "@angular/forms";
-import {getHtmlTagDefinition} from "@angular/compiler";
 import {toSignal} from "@angular/core/rxjs-interop";
+import {EmployeeService} from "../service/employee.service";
+import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -15,15 +14,23 @@ import {toSignal} from "@angular/core/rxjs-interop";
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent
+{
   bearer: string = '';
   employees$: Observable<Employee[]>;
+  protected readonly toSignal = toSignal;
+  protected readonly toString = toString;
 
-  toggleCheckbox(_id:any)
-  {
+  constructor(
+    private employeeService: EmployeeService,
+    private employeeDetailService: EmployeeDetailService,) {
+    this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
+  }
+
+  toggleCheckbox(_id: any) {
     let id = _id.toString();
-    let checkbox = <HTMLInputElement> document.getElementById(id);
-    let div = <HTMLInputElement> document.getElementById(id +"-test");
+    let checkbox = <HTMLInputElement>document.getElementById(id);
+    let div = <HTMLInputElement>document.getElementById(id + "-test");
     if (checkbox.checked) {
       div.style.backgroundColor = 'lightblue'; // Change to your desired color
       div.style.border = 'lightblue solid 2px';
@@ -35,16 +42,11 @@ export class EmployeeListComponent {
     }
   }
 
-  constructor(
-    private http: HttpClient,
-    private employeeService: EmployeeService) {
-    this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
+  onRowClick(employee: any) {
+    this.employeeDetailService.setSelectedEmployee(employee);
   }
 
   ngOnInit(): void {
     this.employeeService.loadData(); // Load the data when the component initializes
   }
-
-  protected readonly toSignal = toSignal;
-  protected readonly toString = toString;
 }
