@@ -6,13 +6,13 @@
     <div class="frame-boxes-inside box-qualifications">
       <div class="overflow-auto" style="max-height: 150px;">
         <ul class="list-group" id="qualification-list">
-            <li
-              class="list-group-item"
-              *ngFor="let qualification of qualifications$ | async"
-              [class.active]="qualification === activeQualification"
-              (click)="setActiveQualification(qualification)"
-            >{{ qualification.skill }}
-            </li>
+          <li
+            (click)="setActiveQualification(qualification)"
+            *ngFor="let qualification of qualifications$ | async"
+            [class.active]="qualification === activeQualification"
+            class="list-group-item"
+          >{{ qualification.skill }}
+          </li>
         </ul>
       </div>
     </div>
@@ -20,27 +20,25 @@
     <div class="frame-boxes-inside box-editing">
 
       <div class="input-group input-group-sm mb-3">
-        <input aria-describedby="inputGroup-sizing-sm"
+        <input #newQualificationInput
+               aria-describedby="inputGroup-sizing-sm"
                class="form-control"
                id="new-qualification"
                placeholder="Neue Qualifikation"
-               type="text"
-               #newQualificationInput>
+               type="text">
       </div>
 
-      <div class="btn-group-qualifications">
-        <div class="btn-group btn-group-sm" role="group">
-          <button
-            (click)="removeQualification()"
-            class="btn btn-danger"
-            type="button">Remove
-          </button>
-          <button
-            (click)="addQualification(newQualificationInput.value)"
-            class="btn btn-success"
-            type="button">Add
-          </button>
-        </div>
+      <div class="btn-group btn-group-sm" role="group">
+        <button
+          (click)="removeQualification()"
+          class="btn btn-danger"
+          type="button">Löschen
+        </button>
+        <button
+          (click)="addQualification(newQualificationInput.value)"
+          class="btn btn-success"
+          type="button">Hinzufügen
+        </button>
       </div>
 
     </div>
