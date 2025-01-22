@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 /*# = id | . = class*/
 
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+mat-form-field {
+  display: block;
+  margin-top: 4px;
+}
+
 .frame-boxes-outside{
   padding: 14px;
   background: white;
