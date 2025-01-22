@@ -1,11 +1,18 @@
-import {Component, Inject} from '@angular/core';
-import { MatFormFieldModule} from "@angular/material/form-field";
+import {Component, Inject, Input} from '@angular/core';
+import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatListModule} from "@angular/material/list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {NgForOf} from "@angular/common";
+import {AsyncPipe, NgForOf} from "@angular/common";
+import {Employee} from "../../Employee";
+import {EmployeeDetailService} from "../../service/EmployeeDetailService.service";
+import {FormsModule} from "@angular/forms";
+import {QualificationService} from "../../service/qualification.service";
+import {Qualification} from "../../Qualification";
+import {Observable} from "rxjs";
+import {EmployeeService} from "../../service/employee.service";
 
 
 @Component({
@@ -19,6 +26,8 @@ import {NgForOf} from "@angular/common";
     MatListModule,
     MatCheckboxModule,
     NgForOf,
+    FormsModule,
+    AsyncPipe,
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'
@@ -26,18 +35,40 @@ import {NgForOf} from "@angular/common";
 
 
 export class EditComponent {
-  qualifications: string[] = ['Qualifikation 1', 'Qualifikation 2', 'Qualifikation 3','Qualifikation 1', 'Qualifikation 2', 'Qualifikation 3', 'Qualifikation 2', 'Qualifikation 3','Qualifikation 1', 'Qualifikation 2', 'Qualifikation 3', 'Qualifikation 2', 'Qualifikation 3','Qualifikation 1', 'Qualifikation 2', 'Qualifikation 3', 'Qualifikation 2', 'Qualifikation 3','Qualifikation 1', 'Qualifikation 2', 'Qualifikation 3'];
 
+  @Input() employee: Employee = new Employee(0, [], '', '', '', '', '', '');
+   qualifications$: Observable<Qualification[]>;
 
   constructor(
+    private employeeDetailService: EmployeeDetailService,
+    private employeeService: EmployeeService,
+    private qualificationService: QualificationService,
     public dialogRef: MatDialogRef<EditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.qualifications$ = this.qualificationService.getQualifications();
   }
 
   onSave(): void {
-    console.log('Speichern geklickt');
+    const employeeCopy: any = structuredClone(this.employee);
+    employeeCopy.skillSet = this.employee.skillSet.map(qualification => qualification.id);
+    this.employeeService.put(employeeCopy.id, employeeCopy);
     this.dialogRef.close(this.data);
+  }
+
+  compareQualifications(qual1: Qualification, qual2: Qualification): boolean {
+    return qual1 && qual2 ? qual1.skill === qual2.skill : false;
+  }
+
+  ngOnInit(): void {
+    this.employeeDetailService.selectedEmployee$.subscribe((employee) => {
+      if (employee != null)
+        this.employee = employee;
+      else
+        this.employee = new Employee(-1, []);
+    });
+
+    this.qualificationService.getQualifications().subscribe((qualifications) => qualifications = qualifications);
   }
 
 
