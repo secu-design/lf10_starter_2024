@@ -11,8 +11,3 @@
   width: 175px;
   height: fit-content;
 }
-
-.btn-group-qualifications{
-  display: flex;
-  justify-content: flex-end;
-}
