@@ -1,0 +1,12 @@
+.main-area {
+  display: inline-flex;
+  /*background: gray;*/
+}
+
+.left-area {
+  /*background: blue;*/
+}
+
+.right-area {
+  /*background: red;*/
+}

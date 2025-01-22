@@ -1,5 +1,18 @@
-button{
-  font-size: 14px;
-  padding: 3px;
-  border-radius: 9px;
+.container {
+
+}
+
+.search-bar {
+  margin-bottom: 14px;
+}
+
+.box-outside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.box-inside {
+
 }
