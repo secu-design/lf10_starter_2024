@@ -5,11 +5,11 @@
     <div class="left-column">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Vorname</mat-label>
-        <input matInput placeholder="Vorname" />
+        <input [(ngModel)]="employee.firstName" matInput placeholder="Vorname"/>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nachname</mat-label>
-        <input matInput placeholder="Nachname" />
+        <input [(ngModel)]="employee.lastName" matInput placeholder="Nachname"/>
       </mat-form-field>
     </div>
 
@@ -17,19 +17,19 @@
     <div class="middle-column">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Straße</mat-label>
-        <input matInput placeholder="Straße" />
+        <input [(ngModel)]="employee.street" matInput placeholder="Straße"/>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>PLZ</mat-label>
-        <input matInput placeholder="PLZ" />
+        <input [(ngModel)]="employee.postcode" matInput placeholder="PLZ"/>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Stadt</mat-label>
-        <input matInput placeholder="Stadt" />
+        <input [(ngModel)]="employee.city" matInput placeholder="Stadt"/>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Telefon</mat-label>
-        <input matInput placeholder="Telefon" />
+        <input [(ngModel)]="employee.phone" matInput placeholder="Telefon"/>
       </mat-form-field>
     </div>
 
@@ -37,13 +37,13 @@
     <div class="right-column">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Qualifikation suchen</mat-label>
-        <input matInput placeholder="Suchbegriff" />
+        <input matInput placeholder="Suchbegriff"/>
       </mat-form-field>
 
       <div class="qualification-list-container">
-        <mat-selection-list>
-          <mat-list-option *ngFor="let qual of qualifications">
-            <p style="margin-bottom: 0;">{{ qual }}</p>
+        <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
+          <mat-list-option *ngFor="let qual of qualifications$ | async" [value]="qual">
+            <p style="margin-bottom: 0;">{{ qual.skill }}</p>
           </mat-list-option>
         </mat-selection-list>
       </div>
@@ -52,7 +52,7 @@
 </div>
 
 <!-- Buttons unten rechts -->
-<div mat-dialog-actions align="end">
+<div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button mat-raised-button color="primary" (click)="onSave()">Speichern</button>
+  <button (click)="onSave()" color="primary" mat-raised-button>Speichern</button>
 </div>
