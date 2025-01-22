@@ -7,7 +7,8 @@ import {TokenService} from "./token.service";
 @Injectable({
   providedIn: 'root',
 })
-export class QualificationService {
+export class QualificationService
+{
   private qualificationsSubject: BehaviorSubject<Qualification[]> = new BehaviorSubject<Qualification[]>([]);
 
   constructor(
@@ -36,7 +37,7 @@ export class QualificationService {
   }
 
   // HTTP call to create qualifications
-  public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
+  public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): void {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -48,17 +49,16 @@ export class QualificationService {
 
       this.http.post<Qualification>('http://localhost:8089/qualifications', body, {headers}).subscribe(
         (qualification) => {
+          const currentQualifications = this.qualificationsSubject.value;
+          this.qualificationsSubject.next([...currentQualifications, qualification]);
           if (onSuccess) onSuccess(qualification);
-          return qualification;
         },
         (error) => {
           if (onError) onError(error);
         }
       );
     });
-    return null;
   }
-
 
   // HTTP call to update qualifications
   public put(employeeId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
