@@ -18,7 +18,9 @@ export class EmployeeDetailsComponent
 {
   @Input() employee: Employee | null = new Employee();
 
-  constructor(private employeeDetailService: EmployeeDetailService, public dialog: MatDialog) {
+  constructor(
+    private employeeDetailService: EmployeeDetailService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
