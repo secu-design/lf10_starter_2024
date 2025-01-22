@@ -5,10 +5,14 @@
 
     <div class="frame-boxes-inside box-qualifications">
       <div class="overflow-auto" style="max-height: 150px;">
-        <ul class="list-group">
-          @for (qualificationsObservable of qualifications$ | async; track qualificationsObservable.skill) {
-            <li class="list-group-item">{{ qualificationsObservable.skill }}</li>
-          }
+        <ul class="list-group" id="qualification-list">
+            <li
+              class="list-group-item"
+              *ngFor="let qualification of qualifications$ | async"
+              [class.active]="qualification === activeQualification"
+              (click)="setActiveQualification(qualification)"
+            >{{ qualification.skill }}
+            </li>
         </ul>
       </div>
     </div>
@@ -26,12 +30,15 @@
 
       <div class="btn-group-qualifications">
         <div class="btn-group btn-group-sm" role="group">
-          <button class="btn btn-danger" id="btn-add-general-qualification" type="button">Remove</button>
-          <button (click)="addQualification(newQualificationInput.value)"
-                  class="btn btn-success"
-                  id="btn-rm-general-qualification"
-                  type="button">
-            Add
+          <button
+            (click)="removeQualification()"
+            class="btn btn-danger"
+            type="button">Remove
+          </button>
+          <button
+            (click)="addQualification(newQualificationInput.value)"
+            class="btn btn-success"
+            type="button">Add
           </button>
         </div>
       </div>

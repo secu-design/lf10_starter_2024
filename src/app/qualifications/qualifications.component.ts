@@ -1,14 +1,15 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {QualificationService} from "../service/qualification.service";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgForOf} from "@angular/common";
 import {Qualification} from "../Qualification";
 
 @Component({
   selector: 'app-qualifications',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    NgForOf
   ],
   templateUrl: './qualifications.component.html',
   styleUrl: './qualifications.component.css'
@@ -16,20 +17,34 @@ import {Qualification} from "../Qualification";
 export class QualificationsComponent
 {
   qualifications$: Observable<Qualification[]>;
+  activeQualification: Qualification | null = null;
 
   constructor(
     private qualificationService: QualificationService) {
-    this.qualifications$ = this.qualificationService.getQualifications(); // Use the service to get employees
+    this.qualifications$ = this.qualificationService.getQualifications();
   }
 
   ngOnInit(): void {
-    this.qualificationService.loadData(); // Load the data when the component initializes
+    this.qualificationService.loadData();
+  }
+
+  setActiveQualification(qualification: Qualification) {
+    this.activeQualification = qualification;
   }
 
   addQualification(qualification: string) {
-    this.qualificationService.post(qualification)
-    // 1. Wie aktualisiert man das HTML Element automatisch?
-    // 2. Es muss eine Prüfung geben, damit Elemente nicht doppelt hinzugefügt werden. Das sollte der Service
-    // sicherstellen.
+    this.qualificationService.post(qualification, () => {
+      this.qualifications$ = this.qualificationService.getQualifications(); // Liste aktualisieren
+    });
+  }
+
+  removeQualification() {
+    if (this.activeQualification && this.activeQualification.id !== undefined) {
+      this.qualificationService.delete(this.activeQualification.id, () => {
+        this.qualificationService.loadData(() => {
+          this.activeQualification = null; // Aktive Qualifikation zurücksetzen
+        });
+      });
+    }
   }
 }
