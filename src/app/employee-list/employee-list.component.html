@@ -1,24 +1,46 @@
-<div style="margin-left: 20%">
-  <div style="width: fit-content; align-content: center;">
-    <h2 style="text-align: center">Mitarbeiter</h2>
-    <div>
-      <input style="border-radius: 20px" type="search">
-    </div>
-    <hr>
-    @for (employee of employees$ | async; track employee.id) {
-      <div (click)="onRowClick(employee)" class="form-check form-check-reverse" style="margin-left: 4px; margin-right: 4px"
-           id="{{employee.id}}-test">
-        <input class="form-check-input" style=" float: right" type="checkbox" value="" id="{{employee.id}}" (change)="toggleCheckbox(employee.id)">
-        <label class="form-check-label" style=" float: left" for="{{employee.id}}">
-          {{ employee.lastName }} {{ employee.firstName }}
-        </label>
-      </div>
-    }
+<div class="container">
+  <p><b>Mitarbeiter</b></p>
 
-    <hr>
-    <div>
-      <button class="btn btn-dark" style="float: left; margin-left: 4px;" type="button">Hinzufügen</button>
-      <button class="btn btn-danger" style="float: right; margin-right: 4px" type="button">Lösche</button>
+  <div class="input-group search-bar">
+    <input aria-describedby="search-addon"
+           aria-label="Search"
+           class="form-control rounded"
+           placeholder="Search"
+           type="search"/>
+    <button
+      class="btn btn-outline-primary"
+      type="button">Search
+    </button>
+  </div>
+
+  <div class="frame-boxes-outside box-outside">
+
+    <div class="frame-boxes-inside box-inside">
+      <div class="overflow-auto" style="max-height: 150px;">
+        <ul class="list-group" id="employee-list">
+          <li
+            (click)="setActiveEmployee(employee)"
+            *ngFor="let employee of employees$ | async"
+            [class.active]="employee === activeEmployee"
+            class="list-group-item"
+          >{{ employee.lastName }}, {{ employee.firstName }}
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="btn-group btn-group-sm" role="group">
+      <button
+        (click)="removeEmployee()"
+        class="btn btn-danger btn-sm"
+        type="button">Löschen
+      </button>
+      <button
+        (click)="addEmployee()"
+        class="btn btn-success btn-sm"
+        type="button">Hinzufügen
+      </button>
+    </div>
+
   </div>
 </div>
