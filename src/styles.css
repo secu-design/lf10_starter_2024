@@ -28,22 +28,3 @@ mat-form-field {
   width: 175px;
   height: 175px;
 }
-
-.hr {
-  width: auto;
-  height: 0;
-  background-color: grey;
-  border: grey solid 2px;
-  border-radius: 4px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
