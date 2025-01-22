@@ -1,5 +1,5 @@
 <div class="container">
-<p><b>Details</b></p>
+  <p><b>Details</b></p>
 
   <div class="frame-boxes-outside box-outside">
 
@@ -9,6 +9,10 @@
       <div class="frame-boxes-inside box-address">
         <table>
           <tbody>
+          <tr>
+            <td>Name:</td>
+            <td>{{ employee?.lastName }}, {{ employee?.firstName }}</td>
+          </tr>
           <tr>
             <td>Straße:</td>
             <td>{{ employee?.street }}</td>
@@ -28,6 +32,15 @@
           </tbody>
         </table>
       </div>
+
+      <div class="edit-employee-button">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          (click)="edit()" >Bearbeiten
+        </button>
+      </div>
+
     </div>
 
     <div>
@@ -37,8 +50,8 @@
         <div class="overflow-auto" style="max-height: 200px;">
           <ul class="list-group">
             <li
-              class="list-group-item"
-              *ngFor="let qualification of employee?.skillSet">
+              *ngFor="let qualification of employee?.skillSet"
+              class="list-group-item">
               {{ qualification.skill }}
             </li>
           </ul>
@@ -46,8 +59,6 @@
       </div>
     </div>
   </div>
-
-  <button class="btn btn-primary" type="button" (click)="edit()">edit</button>
 
 </div>
 

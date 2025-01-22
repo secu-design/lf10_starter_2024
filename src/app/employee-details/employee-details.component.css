@@ -1,8 +1,8 @@
-.container{
-  margin: 20px;
+.container {
+  /*margin: 20px;*/
 }
 
-.box-outside{
+.box-outside {
   display: inline-flex;
   gap: 20px;
 }
@@ -13,4 +13,9 @@
 
 th, td {
   padding-right: 15px;
+}
+
+.edit-employee-button {
+  margin-top: 22px;
+  text-align: end;
 }
