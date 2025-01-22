@@ -1,16 +1,23 @@
-<div style="width: fit-content; align-content: center;">
-  <h2 style="text-align: center">Mitarbeiter</h2>
-  <li></li>
-  <table style="width: fit-content;">
-    <tr (click)="onRowClick(employee)" *ngFor="let employee of employees$ | async; trackBy: trackById">
-      <td>{{ employee.lastName }} {{ employee.firstName }}</td>
-      <td><input type="checkbox" style="padding-left: 2px"></td>
-    </tr>
-  </table>
-  <li></li>
-  <div style="align-content: center">
-    <button class="btn btn-dark" type="button">Hinzufügen</button>
-    <button class="btn btn-danger" type="button">Lösche</button>
-  </div>
+<div style="margin-left: 20%">
+  <div style="width: fit-content; align-content: center;">
+    <h2 style="text-align: center">Mitarbeiter</h2>
+    <div>
+      <input style="border-radius: 20px" type="search">
+    </div>
+    <hr>
+    @for (e of employees$ | async; track e.id) {
+      <div class="form-check form-check-reverse" style="margin-left: 4px; margin-right: 4px" id="{{e.id}}-test">
+        <input class="form-check-input" style=" float: right" type="checkbox" value="" id="{{e.id}}" (change)="toggleCheckbox(e.id)">
+        <label class="form-check-label" style=" float: left" for="{{e.id}}">
+          {{ e.lastName }} {{ e.firstName }}
+        </label>
+      </div>
+    }
 
+    <hr>
+    <div>
+      <button class="btn btn-dark" style="float: left; margin-left: 4px;" type="button">Hinzufügen</button>
+      <button class="btn btn-danger" style="float: right; margin-right: 4px" type="button">Lösche</button>
+    </div>
+  </div>
 </div>
