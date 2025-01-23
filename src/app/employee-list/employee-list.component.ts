@@ -6,6 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {EmployeeService} from "../service/employee.service";
 import {EditComponent} from "../popUps/edit/edit.component";
 import {MatDialog} from "@angular/material/dialog";
+import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -21,6 +22,7 @@ export class EmployeeListComponent
 
   constructor(
     private employeeService: EmployeeService,
+    private employeeDetailService: EmployeeDetailService,
     private dialog: MatDialog) {
     this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
   }
@@ -31,13 +33,24 @@ export class EmployeeListComponent
 
   setActiveEmployee(employee: Employee) {
     this.activeEmployee = employee;
+    this.employeeDetailService.setSelectedEmployee(employee);
   }
 
   addEmployee() {
     this.dialog.open(EditComponent, {
       width: '1200px',
       height: '600px',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: {isEdit: false}
+    });
+  }
+
+  editEmployee() {
+    this.dialog.open(EditComponent, {
+      width: '1200px',
+      height: '600px',
+      panelClass: 'custom-dialog-container',
+      data: {isEdit: true}
     });
   }
 
@@ -49,5 +62,6 @@ export class EmployeeListComponent
         });
       });
     }
+    this.employeeDetailService.setSelectedEmployee(new Employee());
   }
 }

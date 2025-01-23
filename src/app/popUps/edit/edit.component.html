@@ -1,4 +1,4 @@
-<h2 mat-dialog-title styles="margin-bottom:4px">Benutzerinformationen</h2>
+<h2 mat-dialog-title style="margin-bottom:4px">Benutzerinformationen</h2>
 <div mat-dialog-content>
   <div class="dialog-container">
     <!-- Linke Spalte: Vorname und Nachname -->
@@ -54,5 +54,6 @@
 <!-- Buttons unten rechts -->
 <div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button (click)="onSave()" color="primary" mat-raised-button>Speichern</button>
+  <button *ngIf="isEdit" (click)="onSave()" color="primary" mat-raised-button>Speichern</button>
+  <button *ngIf="!isEdit" (click)="onCreate()" color="primary" mat-raised-button>Anlegen</button>
 </div>
