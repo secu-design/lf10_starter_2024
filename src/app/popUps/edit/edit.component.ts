@@ -8,7 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {Employee} from "../../Employee";
 import {EmployeeDetailService} from "../../service/EmployeeDetailService.service";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {QualificationService} from "../../service/qualification.service";
 import {Qualification} from "../../Qualification";
 import {Observable} from "rxjs";
@@ -28,6 +28,7 @@ import {EmployeeService} from "../../service/employee.service";
     FormsModule,
     AsyncPipe,
     NgIf,
+    ReactiveFormsModule,
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'
@@ -53,12 +54,17 @@ export class EditComponent {
   }
 
   onCreate(): void {
-    this.employeeService.post(this.employee, () => {this.employeeService.loadData();});
+    this.employeeService.post(this.employee, (employee) => {
+      this.employeeDetailService.setSelectedEmployee(employee);
+      this.employeeService.loadData();
+    });
     this.dialogRef.close();
   }
 
   onSave(): void {
-    this.employeeService.put(this.employee.id, this.employee, () => {this.employeeService.loadData();});
+    this.employeeService.put(this.employee.id, this.employee, () => {
+      this.employeeService.loadData();
+    });
     this.dialogRef.close();
   }
 

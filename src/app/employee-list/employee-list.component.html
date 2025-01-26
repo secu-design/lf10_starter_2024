@@ -21,7 +21,7 @@
           <li
             (click)="setActiveEmployee(employee)"
             *ngFor="let employee of employees$ | async"
-            [class.active]="employee === activeEmployee"
+            [class.active]="employee.id === activeEmployee?.id"
             class="list-group-item"
           >{{ employee.lastName }}, {{ employee.firstName }}
           </li>

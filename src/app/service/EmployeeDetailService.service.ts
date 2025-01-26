@@ -17,4 +17,8 @@ export class EmployeeDetailService
   getSelectedEmployee() {
     return this.selectedEmployeeSubject.getValue();
   }
+
+  getSelectedEmployeeObservable() {
+    return this.selectedEmployeeSubject;
+  }
 }

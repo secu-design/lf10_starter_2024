@@ -1,59 +1,62 @@
 <h2 mat-dialog-title style="margin-bottom:4px">Benutzerinformationen</h2>
 <div mat-dialog-content>
   <div class="dialog-container">
-    <!-- Linke Spalte: Vorname und Nachname -->
-    <div class="left-column">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Vorname</mat-label>
-        <input [(ngModel)]="employee.firstName" matInput placeholder="Vorname"/>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nachname</mat-label>
-        <input [(ngModel)]="employee.lastName" matInput placeholder="Nachname"/>
-      </mat-form-field>
-    </div>
-
-    <!-- Mittlere Spalte: Straße, PLZ, Stadt, Telefon -->
-    <div class="middle-column">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Straße</mat-label>
-        <input [(ngModel)]="employee.street" matInput placeholder="Straße"/>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>PLZ</mat-label>
-        <input [(ngModel)]="employee.postcode" matInput placeholder="PLZ"/>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Stadt</mat-label>
-        <input [(ngModel)]="employee.city" matInput placeholder="Stadt"/>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Telefon</mat-label>
-        <input [(ngModel)]="employee.phone" matInput placeholder="Telefon"/>
-      </mat-form-field>
-    </div>
-
-    <!-- Rechte Spalte: Liste der Qualifikationen -->
-    <div class="right-column">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Qualifikation suchen</mat-label>
-        <input matInput placeholder="Suchbegriff"/>
-      </mat-form-field>
-
-      <div class="qualification-list-container">
-        <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
-          <mat-list-option *ngFor="let qual of qualifications$ | async" [value]="qual">
-            <p style="margin-bottom: 0;">{{ qual.skill }}</p>
-          </mat-list-option>
-        </mat-selection-list>
+      <!-- Linke Spalte: Vorname und Nachname -->
+      <div class="left-column">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vorname</mat-label>
+          <input [(ngModel)]="employee.firstName" name="firstName" #firstName="ngModel" matInput placeholder="Vorname" required/>
+          <mat-error *ngIf="firstName.invalid && firstName.touched">Vorname ist erforderlich.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nachname</mat-label>
+          <input [(ngModel)]="employee.lastName"  name="lastName" #lastName="ngModel" matInput placeholder="Nachname" required/>
+          <mat-error *ngIf="lastName.invalid && lastName.touched">Nachname ist erforderlich.</mat-error>
+        </mat-form-field>
       </div>
-    </div>
+
+      <!-- Mittlere Spalte: Straße, PLZ, Stadt, Telefon -->
+      <div class="middle-column">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Straße</mat-label>
+          <input [(ngModel)]="employee.street"  name="street" #street="ngModel"  matInput placeholder="Straße" required/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>PLZ</mat-label>
+          <input [(ngModel)]="employee.postcode" name="postcode" #postcode="ngModel" matInput maxlength="5" minLength="5" placeholder="PLZ" required/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Stadt</mat-label>
+          <input [(ngModel)]="employee.city" name="city" #city="ngModel" matInput placeholder="Stadt" required/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Telefon</mat-label>
+          <input [(ngModel)]="employee.phone" name="phone" #phone="ngModel" matInput placeholder="Telefon" required/>
+        </mat-form-field>
+      </div>
+
+      <!-- Rechte Spalte: Liste der Qualifikationen -->
+      <div class="right-column">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Qualifikation suchen</mat-label>
+          <input matInput placeholder="Suchbegriff"/>
+        </mat-form-field>
+
+        <div class="qualification-list-container">
+          <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
+            <mat-list-option *ngFor="let qual of qualifications$ | async" [value]="qual">
+              <p style="margin-bottom: 0;">{{ qual.skill }}</p>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </div>
   </div>
 </div>
 
 <!-- Buttons unten rechts -->
 <div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button *ngIf="isEdit" (click)="onSave()" color="primary" mat-raised-button>Speichern</button>
-  <button *ngIf="!isEdit" (click)="onCreate()" color="primary" mat-raised-button>Anlegen</button>
+  <!--formGroup hat zu Fehlern geführt-->
+  <button (click)="onSave()" *ngIf="isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || !employee.city || !employee.phone" color="primary" mat-raised-button>Speichern</button>
+  <button (click)="onCreate()" *ngIf="!isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || !employee.city || !employee.phone" color="primary" mat-raised-button>Anlegen</button>
 </div>

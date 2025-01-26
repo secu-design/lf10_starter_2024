@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Employee} from '../Employee';
 import {TokenService} from "./token.service";
+import {EmployeeDetailService} from "./EmployeeDetailService.service";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class EmployeeService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService) {
+    private tokenService: TokenService,
+    private employeeDetailService: EmployeeDetailService) {
   }
 
   //refresh the employee list
@@ -93,7 +95,7 @@ export class EmployeeService {
     });
   }
 
-  private mapEmployee(employee: Employee): any{
+  private mapEmployee(employee: Employee): any {
     const employeeCopy: any = structuredClone(employee);
     employeeCopy.skillSet = employee.skillSet.map(qualification => qualification.id);
     return employeeCopy;

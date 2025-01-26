@@ -24,15 +24,17 @@ export class EmployeeListComponent
     private employeeService: EmployeeService,
     private employeeDetailService: EmployeeDetailService,
     private dialog: MatDialog) {
-    this.employees$ = this.employeeService.getEmployees(); // Use the service to get employees
+    this.employees$ = this.employeeService.getEmployees();
   }
 
   ngOnInit(): void {
-    this.employeeService.loadData(); // Load the data when the component initializes
+    this.employeeService.loadData();
+    this.employeeDetailService.getSelectedEmployeeObservable().subscribe((employee) => {
+      this.activeEmployee = employee;
+    });
   }
 
   setActiveEmployee(employee: Employee) {
-    this.activeEmployee = employee;
     this.employeeDetailService.setSelectedEmployee(employee);
   }
 
@@ -57,9 +59,7 @@ export class EmployeeListComponent
   removeEmployee() {
     if (this.activeEmployee && this.activeEmployee.id !== undefined) {
       this.employeeService.delete(this.activeEmployee.id, () => {
-        this.employeeService.loadData(() => {
-          this.activeEmployee = null; // Aktive Qualifikation zurücksetzen
-        });
+        this.employeeService.loadData();
       });
     }
     this.employeeDetailService.setSelectedEmployee(new Employee());
