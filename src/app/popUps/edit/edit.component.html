@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>PLZ</mat-label>
-          <input [(ngModel)]="employee.postcode" name="postcode" #postcode="ngModel" matInput maxlength="5" minLength="5" placeholder="PLZ" required/>
+          <input [(ngModel)]="employee.postcode"  name="postcode" #postcode="ngModel"  matInput maxlength="5" minlength="5" placeholder="PLZ" required/>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Stadt</mat-label>
@@ -57,6 +57,6 @@
 <div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
   <!--formGroup hat zu Fehlern geführt-->
-  <button (click)="onSave()" *ngIf="isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || !employee.city || !employee.phone" color="primary" mat-raised-button>Speichern</button>
-  <button (click)="onCreate()" *ngIf="!isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || !employee.city || !employee.phone" color="primary" mat-raised-button>Anlegen</button>
+  <button (click)="onSave()" *ngIf="isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone" color="primary" mat-raised-button>Speichern</button>
+  <button (click)="onCreate()" *ngIf="!isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone" color="primary" mat-raised-button>Anlegen</button>
 </div>

@@ -1,0 +1,25 @@
+<div mat-dialog-title>
+  <h2>Fehler</h2>
+</div>
+
+<div mat-dialog-content>
+  <p>{{ errorMessage }}</p>
+
+  <!-- Display support email for errors -->
+  <div>
+    <p>Technische Hilfe erhalten Sie bei: <a href="mailto:support@example.com">support&#64;example.com</a><br>Kopieren Sie bitte die technischen Details und fügen diese mit in die E-Mail ein.</p>
+
+    <button mat-button (click)="toggleTechnicalDetails()">
+       Technische Details {{ showTechnicalDetails ? 'verstecken' : 'anzeigen' }}
+    </button>
+
+    <!-- Technical Details -->
+    <pre *ngIf="showTechnicalDetails" class="error-details">
+{{ error | json }}
+    </pre>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
