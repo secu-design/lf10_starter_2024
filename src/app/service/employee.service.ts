@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Employee} from '../Employee';
 import {TokenService} from "./token.service";
-import {EmployeeDetailService} from "./EmployeeDetailService.service";
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,7 @@ export class EmployeeService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService,
-    private employeeDetailService: EmployeeDetailService) {
+    private tokenService: TokenService) {
   }
 
   //refresh the employee list
@@ -49,6 +47,7 @@ export class EmployeeService {
           return employee;
         },
         (error) => {
+          error.payload = employee;
           if (onError) onError(error);
         }
       );
@@ -69,6 +68,8 @@ export class EmployeeService {
           return employee;
         },
         (error) => {
+          error.parameters = {employeeId: employeeId};
+          error.payload = employee;
           if (onError) onError(error);
         }
       );
@@ -89,6 +90,7 @@ export class EmployeeService {
             if (onSuccess) onSuccess();
           },
           (error) => {
+            error.parameters = {employeeId: employeeId};
             if (onError) onError(error);
           }
         );

@@ -54,6 +54,7 @@ export class QualificationService
           if (onSuccess) onSuccess(qualification);
         },
         (error) => {
+          error.payload = body;
           if (onError) onError(error);
         }
       );
@@ -61,7 +62,7 @@ export class QualificationService
   }
 
   // HTTP call to update qualifications
-  public put(employeeId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
+  public put(skillId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
     this.tokenService.getToken().then((token: string) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -71,12 +72,14 @@ export class QualificationService
         skill: skill,
       };
 
-      this.http.put<Qualification>(`http://localhost:8089/qualifications/${employeeId}`, body, {headers}).subscribe(
+      this.http.put<Qualification>(`http://localhost:8089/qualifications/${skillId}`, body, {headers}).subscribe(
         (qualification) => {
           if (onSuccess) onSuccess(qualification);
           return qualification;
         },
         (error) => {
+          error.parameters = {skillId: skillId};
+          error.payload = body;
           if (onError) onError(error);
         }
       );
@@ -97,6 +100,7 @@ export class QualificationService
             if (onSuccess) onSuccess();
           },
           (error) => {
+            error.parameters = {skillId: skillId};
             if (onError) onError(error);
           }
         );

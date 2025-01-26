@@ -1,0 +1,7 @@
+.error-details {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 1rem;
+  overflow-x: auto;
+  max-height: 300px;
+}

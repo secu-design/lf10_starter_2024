@@ -7,6 +7,8 @@ import {EmployeeService} from "../service/employee.service";
 import {EditComponent} from "../popUps/edit/edit.component";
 import {MatDialog} from "@angular/material/dialog";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
+import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../utils/GlobalFunctions";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-employee-list',
@@ -23,7 +25,8 @@ export class EmployeeListComponent
   constructor(
     private employeeService: EmployeeService,
     private employeeDetailService: EmployeeDetailService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) {
     this.employees$ = this.employeeService.getEmployees();
   }
 
@@ -58,8 +61,17 @@ export class EmployeeListComponent
 
   removeEmployee() {
     if (this.activeEmployee && this.activeEmployee.id !== undefined) {
-      this.employeeService.delete(this.activeEmployee.id, () => {
+      let name = this.activeEmployee.firstName + ' ' + this.activeEmployee.lastName;
+      openBusyDialog(this.dialog, "Mitarbeiter wird gelöscht");
+      this.employeeService.delete(this.activeEmployee.id, () => { //on success
+        openMessageDialog(this.dialog, `Mitarbeiter '${name}' wurde erfolgreich gelöscht!`);
+        openToast(this.snackBar, `Mitarbeiter '${name}' gelöscht`, false);
+        closeBusyDialog();
         this.employeeService.loadData();
+      }, (error) => { //on error
+        closeBusyDialog();
+        openMessageDialog(this.dialog, error);
+        openToast(this.snackBar, `Mitarbeiter '${name}' konnte nicht gelöscht werden`, true);
       });
     }
     this.employeeDetailService.setSelectedEmployee(new Employee());
