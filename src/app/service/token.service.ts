@@ -23,6 +23,10 @@ export class TokenService {
     return this.bearerToken;
   }
 
+  logout() {
+    this.keycloakService.logout();
+  }
+
   // Observable for token changes
   getTokenObservable() {
     return this.tokenSubject.asObservable();
