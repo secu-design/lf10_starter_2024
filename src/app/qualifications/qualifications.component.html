@@ -3,19 +3,30 @@
 
   <div class="frame-boxes-outside box-outside">
 
-    <div class="frame-boxes-inside box-qualifications">
-      <div class="overflow-auto" style="max-height: 150px;">
-        <ul class="list-group" id="qualification-list">
-          <li
-            (click)="setActiveQualification(qualification)"
-            *ngFor="let qualification of qualifications$ | async"
-            [class.active]="qualification === activeQualification"
-            class="list-group-item"
-          >{{ qualification.skill }}
-          </li>
-        </ul>
+      <div class="frame-boxes-inside box-qualifications">
+
+        <div class="input-group input-group-sm search-bar">
+          <input (input)="onSearchChange($event)"
+                 aria-describedby="search-addon"
+                 aria-label="Search"
+                 class="form-control rounded"
+                 placeholder="Suche Qualifikation"
+                 type="search"/>
+        </div>
+
+        <div class="overflow-auto" style="max-height: 100%;">
+          <ul class="list-group" id="qualification-list">
+            <li
+              (click)="setActiveQualification(qualification)"
+              *ngFor="let qualification of qualifications$ | async"
+              [class.active]="qualification === activeQualification"
+              class="list-group-item"
+            >{{ qualification.skill }}
+            </li>
+          </ul>
+        </div>
+
       </div>
-    </div>
 
     <div class="frame-boxes-inside box-editing">
 
@@ -32,12 +43,14 @@
         <button
           (click)="removeQualification()"
           class="btn btn-danger"
-          type="button"><fa-icon [icon]="faTrash"></fa-icon>
+          type="button">
+          <fa-icon [icon]="faTrash"></fa-icon>
         </button>
         <button
           (click)="addQualification(newQualificationInput.value)"
           class="btn btn-success"
-          type="button"><fa-icon [icon]="faAdd"></fa-icon>
+          type="button">
+          <fa-icon [icon]="faAdd"></fa-icon>
         </button>
       </div>
 

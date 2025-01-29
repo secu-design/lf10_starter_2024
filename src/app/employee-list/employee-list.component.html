@@ -1,27 +1,21 @@
 <div class="container">
   <div>
     <p><b>Mitarbeiter</b></p>
-
-    <button style="float: right;" type="button" class="btn btn-primary" data-mdb-ripple-init (click)="logout()">
-      <fa-icon [icon]="faSignOut"></fa-icon>
-    </button>
   </div>
 
-
-
-  <div class="input-group search-bar">
-    <input aria-describedby="search-addon"
+  <div class="input-group input-group-sm search-bar">
+    <input (input)="onSearchChange($event)"
+           aria-describedby="search-addon"
            aria-label="Search"
            class="form-control rounded"
            placeholder="Suche Mitarbeiter/Qualifikation"
-           type="search"
-           (input)="onSearchChange($event)"/>
+           type="search"/>
   </div>
 
   <div class="frame-boxes-outside box-outside">
 
     <div class="frame-boxes-inside box-inside">
-      <div class="overflow-auto" style="max-height:100%;">
+      <div class="overflow-auto" style="max-height: 315px;">
         <ul class="list-group" id="employee-list">
           <li
             (click)="setActiveEmployee(employee)"
@@ -38,17 +32,20 @@
       <button
         (click)="removeEmployee()"
         class="btn btn-danger btn-sm"
-        type="button"><fa-icon [icon]="faTrash"></fa-icon>
+        type="button">
+        <fa-icon [icon]="faTrash"></fa-icon>
       </button>
       <button
         (click)="editEmployee()"
         class="btn btn-primary btn-sm"
-        type="button"> <fa-icon [icon]="faEdit"></fa-icon>
+        type="button">
+        <fa-icon [icon]="faEdit"></fa-icon>
       </button>
       <button
         (click)="addEmployee()"
         class="btn btn-success btn-sm"
-        type="button"><fa-icon [icon]="faAdd"></fa-icon>
+        type="button">
+        <fa-icon [icon]="faAdd"></fa-icon>
       </button>
     </div>
 

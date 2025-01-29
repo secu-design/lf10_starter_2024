@@ -1,11 +1,23 @@
 <div class="main-area">
-  <div class="left-area">
-    <app-employee-list></app-employee-list>
+
+  <header>
+    <p id="header-title">Mitarbeiterverwaltung</p>
+
+    <button (click)="logout()" class="btn btn-secondary btn-sm" type="button">
+      Logout
+      <fa-icon [icon]="faSignOut"></fa-icon>
+    </button>
+  </header>
+
+  <div class="content-area">
+    <div class="employee-area">
+      <app-employee-list></app-employee-list>
+    </div>
+
+    <div class="right-area">
+      <app-employee-details></app-employee-details>
+      <app-qualifications></app-qualifications>
+    </div>
   </div>
 
-  <div class="right-area">
-    <app-employee-details></app-employee-details>
-    <br>
-    <app-qualifications></app-qualifications>
-  </div>
 </div>
