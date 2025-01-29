@@ -39,12 +39,12 @@
       <div class="right-column">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Qualifikation suchen</mat-label>
-          <input matInput placeholder="Suchbegriff"/>
+          <input matInput placeholder="Suchbegriff" (input)="onSearchChange($event)" />
         </mat-form-field>
 
         <div class="qualification-list-container">
           <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
-            <mat-list-option *ngFor="let qual of qualifications$ | async" [value]="qual">
+            <mat-list-option *ngFor="let qual of filteredQualifications$ | async" [value]="qual">
               <p style="margin-bottom: 0;">{{ qual.skill }}</p>
             </mat-list-option>
           </mat-selection-list>
