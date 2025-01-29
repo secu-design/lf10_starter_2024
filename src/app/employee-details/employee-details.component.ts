@@ -7,14 +7,14 @@ import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
   selector: 'app-employee-details',
   standalone: true,
   imports: [
-    NgForOf,
+    NgForOf
   ],
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.css'
 })
 export class EmployeeDetailsComponent
 {
-  @Input() employee: Employee | null = new Employee();
+  @Input() employee: Employee | null = null;
 
   constructor(
     private employeeDetailService: EmployeeDetailService) {

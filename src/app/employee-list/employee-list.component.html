@@ -9,31 +9,19 @@
 
 
 
-  <!-- Search Bar --><!--
   <div class="input-group search-bar">
-    <input
-      aria-describedby="search-addon"
-      aria-label="Suchen"
-      placeholder="Suchen..."
-      type="search"
-      (input)="onSearchChange($event)" />
-    <button class="btn btn-outline-primary" type="button">Search</button>
-  </div>-->
-
-
-  <div class="input-group">
-    <div class="form-outline" data-mdb-input-init>
-      <input type="search" class="search-bar" id="form1" class="form-control"  (input)="onSearchChange($event)" />
-    </div>
-    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
-      <fa-icon [icon]="faSearch"></fa-icon>
-    </button>
+    <input aria-describedby="search-addon"
+           aria-label="Search"
+           class="form-control rounded"
+           placeholder="Suche Mitarbeiter/Qualifikation"
+           type="search"
+           (input)="onSearchChange($event)"/>
   </div>
 
   <div class="frame-boxes-outside box-outside">
 
     <div class="frame-boxes-inside box-inside">
-      <div class="overflow-auto" style="max-height: 150px;">
+      <div class="overflow-auto" style="max-height:100%;">
         <ul class="list-group" id="employee-list">
           <li
             (click)="setActiveEmployee(employee)"
