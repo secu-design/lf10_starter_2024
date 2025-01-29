@@ -1,8 +1,4 @@
-.container{
-
-}
-
-.box-outside{
+.box-outside {
   display: inline-flex;
   width: 440px;
   gap: 10px;
@@ -14,7 +10,10 @@
 }
 
 .box-qualifications {
+  display: inline-flex;
+  flex-direction: column;
   width: 225px;
+  gap: 10px;
 }
 
 .box-buttons {

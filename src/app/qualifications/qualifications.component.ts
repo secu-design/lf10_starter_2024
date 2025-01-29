@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable} from "rxjs";
 import {QualificationService} from "../service/qualification.service";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {Qualification} from "../Qualification";
@@ -25,11 +25,28 @@ export class QualificationsComponent {
   qualifications$: Observable<Qualification[]>;
   activeQualification: Qualification | null = null;
 
+  // Filter
+  private searchTerm$ = new BehaviorSubject<string>('');
+  filteredQualifications$: Observable<Qualification[]>;
+
+  // Icons
+  protected readonly faTrash = faTrash;
+  protected readonly faAdd = faAdd;
+
   constructor(
     private qualificationService: QualificationService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar)
+  {
     this.qualifications$ = this.qualificationService.getQualifications();
+    this.filteredQualifications$ = combineLatest([this.qualifications$, this.searchTerm$]).pipe(
+      map(([qualifications, searchTerm]) => {
+        const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
+        return qualifications.filter(qualification =>
+          filters.every(filter =>
+            `${qualification.id} ${qualification.skill}`.toLowerCase().includes(filter)));
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -68,6 +85,8 @@ export class QualificationsComponent {
       });
     }
 
-  protected readonly faTrash = faTrash;
-  protected readonly faAdd = faAdd;
+  onSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm$.next(input.value);
+  }
 }

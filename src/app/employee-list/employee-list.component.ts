@@ -9,9 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../utils/GlobalFunctions";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {faSignOut} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {TokenService} from "../service/token.service";
 import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
 import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
@@ -26,22 +24,23 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 export class EmployeeListComponent {
   employees$: Observable<Employee[]>;
   activeEmployee: Employee | null = null;
+
+  // Filter
   filteredEmployees$: Observable<Employee[]>; // Filtered employee list
-  //icons
-  faSignOut = faSignOut;
+  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
+
+  // Icons
   protected readonly faEdit = faEdit;
   protected readonly faAdd = faAdd;
   protected readonly faTrash = faTrash;
-  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
 
   constructor(
     private employeeService: EmployeeService,
     private employeeDetailService: EmployeeDetailService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private tokenService: TokenService) {
+    private snackBar: MatSnackBar)
+  {
     this.employees$ = this.employeeService.getEmployees();
-
     this.filteredEmployees$ = combineLatest([this.employees$, this.searchTerm$]).pipe(
       map(([employees, searchTerm]) => {
         const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
@@ -105,9 +104,5 @@ export class EmployeeListComponent {
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
-  }
-
-  logout() {
-    this.tokenService.logout();
   }
 }
