@@ -1,15 +1,24 @@
 <div class="container">
   <p><b>Mitarbeiter</b></p>
 
+  <!-- Search Bar --><!--
   <div class="input-group search-bar">
-    <input aria-describedby="search-addon"
-           aria-label="Search"
-           class="form-control rounded"
-           placeholder="Search"
-           type="search"/>
-    <button
-      class="btn btn-outline-primary"
-      type="button">Search
+    <input
+      aria-describedby="search-addon"
+      aria-label="Suchen"
+      placeholder="Suchen..."
+      type="search"
+      (input)="onSearchChange($event)" />
+    <button class="btn btn-outline-primary" type="button">Search</button>
+  </div>-->
+
+
+  <div class="input-group">
+    <div class="form-outline" data-mdb-input-init>
+      <input type="search" class="search-bar" id="form1" class="form-control"  (input)="onSearchChange($event)" />
+    </div>
+    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
+      <fa-icon [icon]="faSearch"></fa-icon>
     </button>
   </div>
 
@@ -20,7 +29,7 @@
         <ul class="list-group" id="employee-list">
           <li
             (click)="setActiveEmployee(employee)"
-            *ngFor="let employee of employees$ | async"
+            *ngFor="let employee of filteredEmployees$ | async"
             [class.active]="employee.id === activeEmployee?.id"
             class="list-group-item"
           >{{ employee.lastName }}, {{ employee.firstName }}

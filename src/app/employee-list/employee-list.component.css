@@ -1,18 +1,35 @@
+
 .container {
-
-}
-
-.search-bar {
-  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+  padding-bottom: 20px;
 }
 
 .box-outside {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 20px;
-  height: 100%;
 }
 
 .box-inside {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
+.overflow-auto {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.search-bar {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+mat-form-field {
+  display: block;
 }

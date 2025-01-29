@@ -65,13 +65,13 @@ export class EditComponent {
     this.employeeService.post(this.employee, (employee) => { //on success
       closeBusyDialog();
       openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich angelegt!`);
-      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' angelegt`, false);
+      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' angelegt`, false);
       this.employeeDetailService.setSelectedEmployee(employee);
       this.employeeService.loadData();
     }, (error) => { //on error
       closeBusyDialog();
       openMessageDialog(this.dialog, error);
-      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht angelegt werden`, true);
+      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht angelegt werden`, true);
     });
     this.dialogRef.close();
   }
@@ -81,12 +81,12 @@ export class EditComponent {
     this.employeeService.put(this.employee.id, this.employee, () => { //on success
       closeBusyDialog();
       openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich geändert!`);
-      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
+      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
       this.employeeService.loadData();
     }, (error) => { //on error
       closeBusyDialog();
-      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht geändert werden`, true);
       openMessageDialog(this.dialog, error);
+      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht geändert werden`, true);
     });
     this.dialogRef.close();
   }
