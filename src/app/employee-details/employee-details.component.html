@@ -11,7 +11,11 @@
           <tbody>
           <tr>
             <td>Name:</td>
-            <td>{{ employee?.lastName }}, {{ employee?.firstName }}</td>
+            <td>
+              @if (employee?.lastName != null) {
+                {{ employee?.lastName}}, {{ employee?.firstName }}
+              }
+            </td>
           </tr>
           <tr>
             <td>Straße:</td>
