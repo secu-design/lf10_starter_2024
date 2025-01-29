@@ -5,12 +5,12 @@
       <div class="left-column">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Vorname</mat-label>
-          <input [(ngModel)]="employee.firstName" name="firstName" #firstName="ngModel" matInput placeholder="Vorname" required/>
+          <input [(ngModel)]="employee.firstName" name="firstName" #firstName="ngModel" matInput placeholder="Vorname" maxlength="25" required/>
           <mat-error *ngIf="firstName.invalid && firstName.touched">Vorname ist erforderlich.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nachname</mat-label>
-          <input [(ngModel)]="employee.lastName"  name="lastName" #lastName="ngModel" matInput placeholder="Nachname" required/>
+          <input [(ngModel)]="employee.lastName"  name="lastName" #lastName="ngModel" matInput placeholder="Nachname" maxlength="25" required/>
           <mat-error *ngIf="lastName.invalid && lastName.touched">Nachname ist erforderlich.</mat-error>
         </mat-form-field>
       </div>
@@ -19,7 +19,7 @@
       <div class="middle-column">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Straße</mat-label>
-          <input [(ngModel)]="employee.street"  name="street" #street="ngModel"  matInput placeholder="Straße" required/>
+          <input [(ngModel)]="employee.street"  name="street" #street="ngModel"  matInput placeholder="Straße" maxlength="50" required/>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>PLZ</mat-label>
@@ -27,11 +27,11 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Stadt</mat-label>
-          <input [(ngModel)]="employee.city" name="city" #city="ngModel" matInput placeholder="Stadt" required/>
+          <input [(ngModel)]="employee.city" name="city" #city="ngModel" matInput placeholder="Stadt" maxlength="25" required/>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Telefon</mat-label>
-          <input [(ngModel)]="employee.phone" name="phone" #phone="ngModel" matInput placeholder="Telefon" required/>
+          <input [(ngModel)]="employee.phone" name="phone" #phone="ngModel" matInput placeholder="Telefon" maxlength="20"  required/>
         </mat-form-field>
       </div>
 

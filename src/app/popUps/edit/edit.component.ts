@@ -64,8 +64,8 @@ export class EditComponent {
     openBusyDialog(this.dialog, "Mitarbeiter wird angelegt");
     this.employeeService.post(this.employee, (employee) => { //on success
       closeBusyDialog();
-      openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich angelegt!`);
-      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' angelegt`, false);
+      //openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich angelegt!`);
+      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' angelegt`, false);
       this.employeeDetailService.setSelectedEmployee(employee);
       this.employeeService.loadData();
     }, (error) => { //on error
@@ -80,8 +80,8 @@ export class EditComponent {
     openBusyDialog(this.dialog, "Mitarbeiter wird gespeichert");
     this.employeeService.put(this.employee.id, this.employee, () => { //on success
       closeBusyDialog();
-      openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich geändert!`);
-      //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
+      //openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich geändert!`);
+      openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
       this.employeeService.loadData();
     }, (error) => { //on error
       closeBusyDialog();
