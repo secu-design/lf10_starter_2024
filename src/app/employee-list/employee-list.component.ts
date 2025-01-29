@@ -9,8 +9,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../utils/GlobalFunctions";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {TokenService} from "../service/token.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -27,12 +28,14 @@ export class EmployeeListComponent
   private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
   //icons
   faSearch = faSearch;
+  faSignOut = faSignOut;
 
   constructor(
     private employeeService: EmployeeService,
     private employeeDetailService: EmployeeDetailService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private tokenService: TokenService) {
     this.employees$ = this.employeeService.getEmployees();
 
     this.filteredEmployees$ = combineLatest([this.employees$, this.searchTerm$]).pipe(
@@ -101,5 +104,10 @@ export class EmployeeListComponent
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
   }
+
+  logout(){
+    this.tokenService.logout();
+  }
+
 
 }
