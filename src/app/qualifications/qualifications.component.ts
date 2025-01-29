@@ -6,13 +6,17 @@ import {Qualification} from "../Qualification";
 import {openMessageDialog, openToast} from "../utils/GlobalFunctions";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 
 @Component({
   selector: 'app-qualifications',
   standalone: true,
   imports: [
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    FontAwesomeModule
   ],
   templateUrl: './qualifications.component.html',
   styleUrl: './qualifications.component.css'
@@ -64,4 +68,6 @@ export class QualificationsComponent {
       });
     }
 
+  protected readonly faTrash = faTrash;
+  protected readonly faAdd = faAdd;
 }

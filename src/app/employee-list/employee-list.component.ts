@@ -9,9 +9,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
 import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../utils/GlobalFunctions";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import { faSearch, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {faSignOut} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TokenService} from "../service/token.service";
+import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
+import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
+import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 
 @Component({
   selector: 'app-employee-list',
@@ -20,15 +23,16 @@ import {TokenService} from "../service/token.service";
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent
-{
+export class EmployeeListComponent {
   employees$: Observable<Employee[]>;
   activeEmployee: Employee | null = null;
   filteredEmployees$: Observable<Employee[]>; // Filtered employee list
-  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
   //icons
-  faSearch = faSearch;
   faSignOut = faSignOut;
+  protected readonly faEdit = faEdit;
+  protected readonly faAdd = faAdd;
+  protected readonly faTrash = faTrash;
+  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
 
   constructor(
     private employeeService: EmployeeService,
@@ -80,8 +84,6 @@ export class EmployeeListComponent
     });
   }
 
-
-
   removeEmployee() {
     if (this.activeEmployee && this.activeEmployee.id !== undefined) {
       let name = this.activeEmployee.firstName + ' ' + this.activeEmployee.lastName;
@@ -105,9 +107,7 @@ export class EmployeeListComponent
     this.searchTerm$.next(input.value);
   }
 
-  logout(){
+  logout() {
     this.tokenService.logout();
   }
-
-
 }
