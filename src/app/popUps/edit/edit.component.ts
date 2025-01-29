@@ -14,7 +14,7 @@ import {
 } from "@angular/forms";
 import {QualificationService} from "../../service/qualification.service";
 import {Qualification} from "../../Qualification";
-import {Observable} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable} from "rxjs";
 import {EmployeeService} from "../../service/employee.service";
 import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from '../../utils/GlobalFunctions';
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -44,6 +44,8 @@ export class EditComponent {
   @Input() employee: Employee = new Employee();
   qualifications$: Observable<Qualification[]>;
   isEdit: boolean;
+  private searchTerm$ = new BehaviorSubject<string>('');
+  filteredQualifications$: Observable<Qualification[]>;
 
   constructor(
     private employeeDetailService: EmployeeDetailService,
@@ -58,6 +60,15 @@ export class EditComponent {
     this.employee = this.isEdit && this.employeeDetailService.getSelectedEmployee() != null ? <Employee>this.employeeDetailService.getSelectedEmployee() : new Employee();
 
     this.qualifications$ = this.qualificationService.getQualifications();
+
+    this.filteredQualifications$ = combineLatest([this.qualifications$, this.searchTerm$]).pipe(
+      map(([qualifications, searchTerm]) => {
+        const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
+        return qualifications.filter(qualification =>
+          filters.every(filter =>
+            `${qualification.id} ${qualification.skill}`.toLowerCase().includes(filter)));
+      })
+    );
   }
 
   onCreate(): void {
@@ -93,5 +104,10 @@ export class EditComponent {
 
   compareQualifications(qual1: Qualification, qual2: Qualification): boolean {
     return qual1 && qual2 ? qual1.skill === qual2.skill : false;
+  }
+
+  onSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm$.next(input.value);
   }
 }
