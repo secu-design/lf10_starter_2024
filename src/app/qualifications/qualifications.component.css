@@ -4,10 +4,15 @@
 
 .box-outside{
   display: inline-flex;
-  gap: 20px;
+  width: 440px;
+  gap: 10px;
 }
 
 .box-editing {
   width: 175px;
   height: fit-content;
+}
+
+.box-qualifications {
+  width: 225px;
 }

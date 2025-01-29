@@ -22,6 +22,7 @@ export class EmployeeDetailsComponent
 
   ngOnInit(): void {
     this.employeeDetailService.selectedEmployee$.subscribe((employee) => {
+      console.log('Selected employee updated in component:', employee);
       this.employee = employee;
     });
   }

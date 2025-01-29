@@ -3,6 +3,19 @@
 
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 mat-form-field {
   display: block;
   margin-top: 4px;
@@ -29,6 +42,19 @@ mat-form-field {
   height: 175px;
 }
 
+
+@media (max-width: 768px) {
+  .hide-on-small-devices {
+    display: none;
+  }
+}
+
+
+@media (min-width: 769px) {
+  .hide-on-large-devices {
+    display: none;
+  }
+}
 
 .mat-mdc-snack-bar-container {
   &.toast-success {
