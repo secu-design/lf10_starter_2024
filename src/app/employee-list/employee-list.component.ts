@@ -7,7 +7,7 @@ import {EmployeeService} from "../service/employee.service";
 import {EditComponent} from "../popUps/edit/edit.component";
 import {MatDialog} from "@angular/material/dialog";
 import {EmployeeDetailService} from "../service/EmployeeDetailService.service";
-import {closeBusyDialog, openBusyDialog, openMessageDialog} from "../utils/GlobalFunctions";
+import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../utils/GlobalFunctions";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
@@ -31,7 +31,8 @@ export class EmployeeListComponent
   constructor(
     private employeeService: EmployeeService,
     private employeeDetailService: EmployeeDetailService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) {
     this.employees$ = this.employeeService.getEmployees();
 
     this.filteredEmployees$ = combineLatest([this.employees$, this.searchTerm$]).pipe(
@@ -84,8 +85,8 @@ export class EmployeeListComponent
       openBusyDialog(this.dialog, "Mitarbeiter wird gelöscht");
       this.employeeService.delete(this.activeEmployee.id, () => { //on success
         closeBusyDialog();
-        openMessageDialog(this.dialog, `Mitarbeiter '${name}' wurde erfolgreich gelöscht!`);
-        //openToast(this.snackBar, `Mitarbeiter '${name}' gelöscht`, false);
+        //openMessageDialog(this.dialog, `Mitarbeiter '${name}' wurde erfolgreich gelöscht!`);
+        openToast(this.snackBar, `Mitarbeiter '${name}' gelöscht`, false);
         this.employeeService.loadData();
       }, (error) => { //on error
         closeBusyDialog();
