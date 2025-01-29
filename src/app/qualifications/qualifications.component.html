@@ -18,7 +18,7 @@
           <ul class="list-group" id="qualification-list">
             <li
               (click)="setActiveQualification(qualification)"
-              *ngFor="let qualification of qualifications$ | async"
+              *ngFor="let qualification of filteredQualifications$ | async"
               [class.active]="qualification === activeQualification"
               class="list-group-item"
             >{{ qualification.skill }}
