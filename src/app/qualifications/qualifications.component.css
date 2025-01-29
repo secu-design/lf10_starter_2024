@@ -16,3 +16,7 @@
 .box-qualifications {
   width: 225px;
 }
+
+.box-buttons {
+  float: right;
+}

@@ -28,16 +28,16 @@
                type="text">
       </div>
 
-      <div class="btn-group btn-group-sm" role="group">
+      <div class="btn-group btn-group-sm box-buttons" role="group">
         <button
           (click)="removeQualification()"
           class="btn btn-danger"
-          type="button">Löschen
+          type="button"><fa-icon [icon]="faTrash"></fa-icon>
         </button>
         <button
           (click)="addQualification(newQualificationInput.value)"
           class="btn btn-success"
-          type="button">Hinzufügen
+          type="button"><fa-icon [icon]="faAdd"></fa-icon>
         </button>
       </div>
 
