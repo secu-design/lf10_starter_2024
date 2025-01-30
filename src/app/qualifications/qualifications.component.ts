@@ -12,6 +12,8 @@ import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 import {EmployeeService} from "../service/employee.service";
 import {Employee} from "../Employee";
 import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
+import {EditComponent} from "../popUps/edit/edit.component";
+import {QualificationComponent} from "../popUps/qualification/qualification.component";
 
 @Component({
   selector: 'app-qualifications',
@@ -121,6 +123,19 @@ export class QualificationsComponent {
     }, (error) => { //on error
       openToast(this.snackBar, `Fehler beim Löschen der Qualifikation '${this.activeQualification?.skill}'`, true);
       openMessageDialog(this.dialog, error);
+    });
+  }
+
+  openEditDialog(qualification: Qualification | null){
+    if(!qualification){
+      openToast(this.snackBar, `Bitte wähle eine Qualifikation zum bearbeiten aus`, true);
+      return;
+    }
+    this.dialog.open(QualificationComponent, {
+      width: '500',
+      height: '300',
+      panelClass: 'custom-dialog-container',
+      data: {qualification: qualification, qualifications: this.qualifications, employees: this.employees}
     });
   }
 
