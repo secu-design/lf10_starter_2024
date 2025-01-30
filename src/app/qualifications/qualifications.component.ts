@@ -24,6 +24,7 @@ import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 export class QualificationsComponent {
   qualifications$: Observable<Qualification[]>;
   activeQualification: Qualification | null = null;
+  qualifications: Qualification[] | null = null;
 
   // Filter
   private searchTerm$ = new BehaviorSubject<string>('');
@@ -39,6 +40,11 @@ export class QualificationsComponent {
     private snackBar: MatSnackBar)
   {
     this.qualifications$ = this.qualificationService.getQualifications();
+
+    this.qualifications$.subscribe((qualifications) => {
+      this.qualifications = qualifications;
+    });
+
     this.filteredQualifications$ = combineLatest([this.qualifications$, this.searchTerm$]).pipe(
       map(([qualifications, searchTerm]) => {
         const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
@@ -63,11 +69,19 @@ export class QualificationsComponent {
       openToast(this.snackBar, `Bitte gib eine Qualifikation an`, true);
       return;
     }
+    if(this.qualifications == null || this.qualifications.find((qual) =>{
+      return qual.skill == qualification;
+    })) {
+      openToast(this.snackBar, `Die Qualifikation '${qualification}' existiert schon`, true);
+      return;
+    }
+
+
     this.qualificationService.post(qualification, () => { //on success
       this.qualifications$ = this.qualificationService.getQualifications();
       openToast(this.snackBar, `Qualifikation '${qualification}' gespeichert`, false);
     }, (error) => { //on error
-      openToast(this.snackBar, `Fehler beim Speichern der Qualifikation '${qualification}'`, true);
+      //openToast(this.snackBar, `Fehler beim Speichern der Qualifikation '${qualification}'`, true);
       openMessageDialog(this.dialog, error)
     });
   }
