@@ -4,18 +4,25 @@
   gap: 10px;
 }
 
-.box-editing {
-  width: 175px;
-  height: fit-content;
+.box-qualifications-all {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .box-qualifications {
   display: inline-flex;
   flex-direction: column;
+  height: 200px;
   width: 225px;
   gap: 10px;
 }
 
-.box-buttons {
+.box-editing {
+  width: 175px;
+  height: fit-content;
+}
+
+.box-buttons-editing {
   float: right;
 }

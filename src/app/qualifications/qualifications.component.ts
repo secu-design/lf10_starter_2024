@@ -11,6 +11,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 import {EmployeeService} from "../service/employee.service";
 import {Employee} from "../Employee";
+import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
 
 @Component({
   selector: 'app-qualifications',
@@ -35,8 +36,9 @@ export class QualificationsComponent {
   filteredQualifications$: Observable<Qualification[]>;
 
   // Icons
-  protected readonly faTrash = faTrash;
   protected readonly faAdd = faAdd;
+  protected readonly faEdit = faEdit;
+  protected readonly faTrash = faTrash;
 
   constructor(
     private qualificationService: QualificationService,
@@ -91,6 +93,10 @@ export class QualificationsComponent {
       //openToast(this.snackBar, `Fehler beim Speichern der Qualifikation '${qualification}'`, true);
       openMessageDialog(this.dialog, error)
     });
+  }
+
+  editQualification() {
+    // TODO
   }
 
   removeQualification() {
