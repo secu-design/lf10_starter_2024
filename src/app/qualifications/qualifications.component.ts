@@ -96,10 +96,6 @@ export class QualificationsComponent {
     });
   }
 
-  editQualification() {
-    // TODO
-  }
-
   removeQualification() {
     if(this.activeQualification == null || this.activeQualification .id == null){
       openToast(this.snackBar, `Keine Qualifikation ausgewählt`, true);
