@@ -63,6 +63,8 @@ export class EmployeeListComponent {
 
   setActiveEmployee(employee: Employee) {
     this.employeeDetailService.setSelectedEmployee(employee);
+    let button = document.getElementById('edit-button') as HTMLButtonElement;
+    button.disabled = false;
   }
 
   addEmployee() {
@@ -89,13 +91,11 @@ export class EmployeeListComponent {
       openBusyDialog(this.dialog, "Mitarbeiter wird gelöscht");
       this.employeeService.delete(this.activeEmployee.id, () => { //on success
         closeBusyDialog();
-        //openMessageDialog(this.dialog, `Mitarbeiter '${name}' wurde erfolgreich gelöscht!`);
         openToast(this.snackBar, `Mitarbeiter '${name}' gelöscht`, false);
         this.employeeService.loadData();
       }, (error) => { //on error
         closeBusyDialog();
         openMessageDialog(this.dialog, error);
-        //openToast(this.snackBar, `Mitarbeiter '${name}' konnte nicht gelöscht werden`, true);
       });
     }
     this.employeeDetailService.setSelectedEmployee(new Employee());
