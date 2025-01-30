@@ -57,14 +57,14 @@ export class EmployeeListComponent {
   ngOnInit(): void {
     this.employeeService.loadData();
     this.employeeDetailService.getSelectedEmployeeObservable().subscribe((employee) => {
+      let button = document.getElementById('edit-button') as HTMLButtonElement;
+      button.disabled = false;
       this.activeEmployee = employee;
     });
   }
 
   setActiveEmployee(employee: Employee) {
     this.employeeDetailService.setSelectedEmployee(employee);
-    let button = document.getElementById('edit-button') as HTMLButtonElement;
-    button.disabled = false;
   }
 
   addEmployee() {

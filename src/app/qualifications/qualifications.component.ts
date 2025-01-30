@@ -12,7 +12,6 @@ import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 import {EmployeeService} from "../service/employee.service";
 import {Employee} from "../Employee";
 import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
-import {EditComponent} from "../popUps/edit/edit.component";
 import {QualificationComponent} from "../popUps/qualification/qualification.component";
 
 @Component({
