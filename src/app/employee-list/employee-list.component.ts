@@ -58,7 +58,7 @@ export class EmployeeListComponent {
     this.employeeService.loadData();
     this.employeeDetailService.getSelectedEmployeeObservable().subscribe((employee) => {
       let button = document.getElementById('edit-button') as HTMLButtonElement;
-      button.disabled = false;
+      button.disabled = employee == null || employee.id == -1;
       this.activeEmployee = employee;
     });
   }
