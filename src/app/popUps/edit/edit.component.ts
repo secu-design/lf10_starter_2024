@@ -57,8 +57,9 @@ export class EditComponent {
     @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean }
   ) {
     this.isEdit = data.isEdit;
-    this.employee = this.isEdit && this.employeeDetailService.getSelectedEmployee() != null ? <Employee>this.employeeDetailService.getSelectedEmployee() : new Employee();
+    let receivedEmployee  = this.isEdit && this.employeeDetailService.getSelectedEmployee() != null ? <Employee>this.employeeDetailService.getSelectedEmployee() : new Employee();
 
+    this.employee = this.isEdit ? Object.assign({}, receivedEmployee) : new Employee();
     this.qualifications$ = this.qualificationService.getQualifications();
 
     this.filteredQualifications$ = combineLatest([this.qualifications$, this.searchTerm$]).pipe(
@@ -93,13 +94,25 @@ export class EditComponent {
       closeBusyDialog();
       //openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich geändert!`);
       openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
-      this.employeeService.loadData();
+      this.employeeService.loadData((list) => {
+        const selectedEmployee = list.find((e) => this.employee.id === e.id);
+        console.log(selectedEmployee);
+        this.employeeDetailService.setSelectedEmployee(selectedEmployee || new Employee());
+      });
     }, (error) => { //on error
       closeBusyDialog();
       openMessageDialog(this.dialog, error);
       //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht geändert werden`, true);
     });
     this.dialogRef.close();
+  }
+
+  validatePlz(){
+    setTimeout(() => {
+      let text = "";
+      if (this.employee != null && this.employee.postcode != null) text = this.employee?.postcode?.replace(/\D/g, '');
+      this.employee.postcode = text;
+    }, 0);
   }
 
   compareQualifications(qual1: Qualification, qual2: Qualification): boolean {

@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>PLZ</mat-label>
-          <input [(ngModel)]="employee.postcode"  name="postcode" #postcode="ngModel"  matInput maxlength="5" minlength="5" placeholder="PLZ" required/>
+          <input [(ngModel)]="employee.postcode" (keydown)="validatePlz()" name="postcode" #postcode="ngModel"  matInput maxlength="5" minlength="5" placeholder="PLZ" required/>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Stadt</mat-label>

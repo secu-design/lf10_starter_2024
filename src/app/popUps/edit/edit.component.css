@@ -20,7 +20,7 @@ mat-dialog-actions {
 }
 
 .qualification-list-container {
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
   padding-right: 10px;
 }
