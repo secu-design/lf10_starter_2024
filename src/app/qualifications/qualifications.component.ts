@@ -9,6 +9,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
+import {EmployeeService} from "../service/employee.service";
+import {Employee} from "../Employee";
 
 @Component({
   selector: 'app-qualifications',
@@ -23,8 +25,10 @@ import {faAdd} from "@fortawesome/free-solid-svg-icons/faAdd";
 })
 export class QualificationsComponent {
   qualifications$: Observable<Qualification[]>;
+  employees$: Observable<Employee[]>;
   activeQualification: Qualification | null = null;
   qualifications: Qualification[] | null = null;
+  employees: Employee[] | null = null;
 
   // Filter
   private searchTerm$ = new BehaviorSubject<string>('');
@@ -36,10 +40,15 @@ export class QualificationsComponent {
 
   constructor(
     private qualificationService: QualificationService,
+    private employeeService: EmployeeService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar)
-  {
+    private snackBar: MatSnackBar) {
     this.qualifications$ = this.qualificationService.getQualifications();
+    this.employees$ = this.employeeService.getEmployees();
+
+    this.employees$.subscribe((employees) => {
+      this.employees = employees;
+    });
 
     this.qualifications$.subscribe((qualifications) => {
       this.qualifications = qualifications;
@@ -63,19 +72,17 @@ export class QualificationsComponent {
     this.activeQualification = qualification;
   }
 
-  //addQualification and removeQualification() only show a message dialog when an error happens, in case you want to add/remove multiple qualification
   addQualification(qualification: string) {
-    if(qualification === '') {
+    if (qualification === '') {
       openToast(this.snackBar, `Bitte gib eine Qualifikation an`, true);
       return;
     }
-    if(this.qualifications == null || this.qualifications.find((qual) =>{
+    if (this.qualifications == null || this.qualifications.find((qual) => {
       return qual.skill == qualification;
     })) {
       openToast(this.snackBar, `Die Qualifikation '${qualification}' existiert schon`, true);
       return;
     }
-
 
     this.qualificationService.post(qualification, () => { //on success
       this.qualifications$ = this.qualificationService.getQualifications();
@@ -87,17 +94,29 @@ export class QualificationsComponent {
   }
 
   removeQualification() {
-    if (!this.activeQualification || this.activeQualification.id === undefined || this.activeQualification.id === null) return;
-      this.qualificationService.delete(this.activeQualification.id, () => { //on success
-        openToast(this.snackBar, `Qualifikation '${this.activeQualification?.skill}' gelöscht`, false);
-        this.qualificationService.loadData(() => {
-          this.activeQualification = null;
-        });
-      }, (error) => { //on error
-        openToast(this.snackBar, `Fehler beim Löschen der Qualifikation '${this.activeQualification?.skill}'`, true);
-        openMessageDialog(this.dialog, error);
-      });
+    if(this.activeQualification == null || this.activeQualification .id == null){
+      openToast(this.snackBar, `Keine Qualifikation ausgewählt`, true);
+      return;
     }
+
+    if (this.employees == null || this.employees.find((employee) => {
+      return employee.skillSet.some((qual) => qual.id === this.activeQualification?.id);
+    })) {
+      openToast(this.snackBar, `Die Qualifikation '${this.activeQualification.skill}' kann nicht gelöscht werden, da sie bereits Mitarbeitern zugeordnet ist.`, true);
+      return;
+    }
+
+    if (!this.activeQualification || this.activeQualification.id === undefined || this.activeQualification.id === null) return;
+    this.qualificationService.delete(this.activeQualification.id, () => { //on success
+      openToast(this.snackBar, `Qualifikation '${this.activeQualification?.skill}' gelöscht`, false);
+      this.qualificationService.loadData(() => {
+        this.activeQualification = null;
+      });
+    }, (error) => { //on error
+      openToast(this.snackBar, `Fehler beim Löschen der Qualifikation '${this.activeQualification?.skill}'`, true);
+      openMessageDialog(this.dialog, error);
+    });
+  }
 
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
