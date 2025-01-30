@@ -3,6 +3,7 @@
 
   <div class="frame-boxes-outside box-outside">
 
+    <div class="box-qualifications-all">
       <div class="frame-boxes-inside box-qualifications">
 
         <div class="input-group input-group-sm search-bar">
@@ -26,7 +27,24 @@
           </ul>
         </div>
 
-      </div>
+    </div>
+
+    <div class="btn-group btn-group-sm box-buttons-editing" role="group">
+      <button
+        (click)="removeQualification()"
+        class="btn btn-danger"
+        type="button">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </button>
+      <button
+        (click)="editQualification()"
+        class="btn btn-primary"
+        type="button">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </button>
+    </div>
+
+    </div>
 
     <div class="frame-boxes-inside box-editing">
 
@@ -39,13 +57,13 @@
                type="text">
       </div>
 
-      <div class="btn-group btn-group-sm box-buttons" role="group">
-        <button
-          (click)="removeQualification()"
-          class="btn btn-danger"
-          type="button">
-          <fa-icon [icon]="faTrash"></fa-icon>
-        </button>
+      <div class="btn-group btn-group-sm box-buttons-editing" role="group">
+<!--        <button-->
+<!--          (click)="removeQualification()"-->
+<!--          class="btn btn-danger"-->
+<!--          type="button">-->
+<!--          <fa-icon [icon]="faTrash"></fa-icon>-->
+<!--        </button>-->
         <button
           (click)="addQualification(newQualificationInput.value)"
           class="btn btn-success"
