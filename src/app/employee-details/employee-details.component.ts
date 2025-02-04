@@ -17,11 +17,14 @@ export class EmployeeDetailsComponent
   @Input() employee: Employee | null = null;
 
   constructor(
-    private employeeDetailService: EmployeeDetailService) {
+    private employeeDetailService: EmployeeDetailService)
+  {
   }
 
-  ngOnInit(): void {
-    this.employeeDetailService.selectedEmployee$.subscribe((employee) => {
+  ngOnInit(): void
+  {
+    this.employeeDetailService.selectedEmployee$.subscribe((employee) =>
+    {
       console.log('Selected employee updated in component:', employee);
       this.employee = employee;
     });

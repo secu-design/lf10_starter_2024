@@ -1,55 +1,61 @@
 <h2 mat-dialog-title style="margin-bottom:4px">Benutzerinformationen</h2>
 <div mat-dialog-content>
   <div class="dialog-container">
-      <!-- Linke Spalte: Vorname und Nachname -->
-      <div class="left-column">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Vorname</mat-label>
-          <input [(ngModel)]="employee.firstName" name="firstName" #firstName="ngModel" matInput placeholder="Vorname" maxlength="25" required/>
-          <mat-error *ngIf="firstName.invalid && firstName.touched">Vorname ist erforderlich.</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nachname</mat-label>
-          <input [(ngModel)]="employee.lastName"  name="lastName" #lastName="ngModel" matInput placeholder="Nachname" maxlength="25" required/>
-          <mat-error *ngIf="lastName.invalid && lastName.touched">Nachname ist erforderlich.</mat-error>
-        </mat-form-field>
-      </div>
+    <!-- Linke Spalte: Vorname und Nachname -->
+    <div class="left-column">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Vorname</mat-label>
+        <input #firstName="ngModel" [(ngModel)]="employee.firstName" matInput maxlength="25" name="firstName"
+               placeholder="Vorname" required/>
+        <mat-error *ngIf="firstName.invalid && firstName.touched">Vorname ist erforderlich.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nachname</mat-label>
+        <input #lastName="ngModel" [(ngModel)]="employee.lastName" matInput maxlength="25" name="lastName"
+               placeholder="Nachname" required/>
+        <mat-error *ngIf="lastName.invalid && lastName.touched">Nachname ist erforderlich.</mat-error>
+      </mat-form-field>
+    </div>
 
-      <!-- Mittlere Spalte: Straße, PLZ, Stadt, Telefon -->
-      <div class="middle-column">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Straße</mat-label>
-          <input [(ngModel)]="employee.street"  name="street" #street="ngModel"  matInput placeholder="Straße" maxlength="50" required/>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>PLZ</mat-label>
-          <input [(ngModel)]="employee.postcode" (keydown)="validatePlz()" name="postcode" #postcode="ngModel"  matInput maxlength="5" minlength="5" placeholder="PLZ" required/>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Stadt</mat-label>
-          <input [(ngModel)]="employee.city" name="city" #city="ngModel" matInput placeholder="Stadt" maxlength="25" required/>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Telefon</mat-label>
-          <input [(ngModel)]="employee.phone" name="phone" #phone="ngModel" matInput placeholder="Telefon" maxlength="20"  required/>
-        </mat-form-field>
-      </div>
+    <!-- Mittlere Spalte: Straße, PLZ, Stadt, Telefon -->
+    <div class="middle-column">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Straße</mat-label>
+        <input #street="ngModel" [(ngModel)]="employee.street" matInput maxlength="50" name="street"
+               placeholder="Straße" required/>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>PLZ</mat-label>
+        <input #postcode="ngModel" (keydown)="validatePlz()" [(ngModel)]="employee.postcode" matInput maxlength="5"
+               minlength="5" name="postcode" placeholder="PLZ" required/>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Stadt</mat-label>
+        <input #city="ngModel" [(ngModel)]="employee.city" matInput maxlength="25" name="city" placeholder="Stadt"
+               required/>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Telefon</mat-label>
+        <input #phone="ngModel" [(ngModel)]="employee.phone" matInput maxlength="20" name="phone" placeholder="Telefon"
+               required/>
+      </mat-form-field>
+    </div>
 
-      <!-- Rechte Spalte: Liste der Qualifikationen -->
-      <div class="right-column">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Qualifikation suchen</mat-label>
-          <input matInput placeholder="Suchbegriff" (input)="onSearchChange($event)" />
-        </mat-form-field>
+    <!-- Rechte Spalte: Liste der Qualifikationen -->
+    <div class="right-column">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Qualifikation suchen</mat-label>
+        <input (input)="onSearchChange($event)" matInput placeholder="Suchbegriff"/>
+      </mat-form-field>
 
-        <div class="qualification-list-container">
-          <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
-            <mat-list-option *ngFor="let qual of filteredQualifications$ | async" [value]="qual">
-              <p style="margin-bottom: 0;">{{ qual.skill }}</p>
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
+      <div class="qualification-list-container">
+        <mat-selection-list [(ngModel)]="employee.skillSet" [compareWith]="compareQualifications">
+          <mat-list-option *ngFor="let qual of filteredQualifications$ | async" [value]="qual">
+            <p style="margin-bottom: 0;">{{ qual.skill }}</p>
+          </mat-list-option>
+        </mat-selection-list>
       </div>
+    </div>
   </div>
 </div>
 
@@ -57,6 +63,12 @@
 <div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
   <!--formGroup hat zu Fehlern geführt-->
-  <button (click)="onSave()" *ngIf="isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone" color="primary" mat-raised-button>Speichern</button>
-  <button (click)="onCreate()" *ngIf="!isEdit" [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone" color="primary" mat-raised-button>Anlegen</button>
+  <button (click)="onSave()" *ngIf="isEdit"
+          [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone"
+          color="primary" mat-raised-button>Speichern
+  </button>
+  <button (click)="onCreate()" *ngIf="!isEdit"
+          [disabled]="!employee.firstName || !employee.lastName || !employee.street || !employee.postcode || employee.postcode.length != 5 || !employee.city || !employee.phone"
+          color="primary" mat-raised-button>Anlegen
+  </button>
 </div>

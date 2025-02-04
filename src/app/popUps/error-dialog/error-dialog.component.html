@@ -7,10 +7,11 @@
 
   <!-- Display support email for errors -->
   <div>
-    <p>Technische Hilfe erhalten Sie bei: <a href="mailto:support@example.com">support&#64;example.com</a><br>Kopieren Sie bitte die technischen Details und fügen diese mit in die E-Mail ein.</p>
+    <p>Technische Hilfe erhalten Sie bei: <a href="mailto:support@example.com">support&#64;example.com</a><br>Kopieren
+      Sie bitte die technischen Details und fügen diese mit in die E-Mail ein.</p>
 
-    <button mat-button (click)="toggleTechnicalDetails()">
-       Technische Details {{ showTechnicalDetails ? 'verstecken' : 'anzeigen' }}
+    <button (click)="toggleTechnicalDetails()" mat-button>
+      Technische Details {{ showTechnicalDetails ? 'verstecken' : 'anzeigen' }}
     </button>
 
     <!-- Technical Details -->

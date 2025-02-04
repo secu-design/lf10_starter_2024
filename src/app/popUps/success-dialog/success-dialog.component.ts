@@ -21,14 +21,12 @@ import {
   templateUrl: './success-dialog.component.html',
   styleUrl: './success-dialog.component.css'
 })
-export class SuccessDialogComponent {
+export class SuccessDialogComponent
+{
+  protected message: string;
 
-  protected message:string;
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { message: string }
-  ) {
-      this.message = data.message;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string })
+  {
+    this.message = data.message;
   }
-
 }

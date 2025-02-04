@@ -1,6 +1,7 @@
 import {Qualification} from "./Qualification";
 
-export class Employee {
+export class Employee
+{
   constructor(public id: number = -1,
               public skillSet: Qualification[] = [],
               public lastName?: string,
@@ -8,6 +9,7 @@ export class Employee {
               public street?: string,
               public postcode?: string,
               public city?: string,
-              public phone?: string) {
+              public phone?: string)
+  {
   }
 }

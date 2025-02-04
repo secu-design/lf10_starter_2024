@@ -13,23 +13,28 @@ export class QualificationService
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService) {
+    private tokenService: TokenService)
+  {
   }
 
   //refresh the qualification list
   loadData(
     onSuccess?: (qualifications: Qualification[]) => void,
-    onError?: (error: any) => void) {
-    this.tokenService.getToken().then((token: string) => {
+    onError?: (error: any) => void)
+  {
+    this.tokenService.getToken().then((token: string) =>
+    {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
       this.http.get<Qualification[]>('http://localhost:8089/qualifications', {headers}).subscribe(
-        (qualifications) => {
+        (qualifications) =>
+        {
           this.qualificationsSubject.next(qualifications);
           if (onSuccess) onSuccess(qualifications);
         },
-        (error) => {
+        (error) =>
+        {
           if (onError) onError(error);
         }
       );
@@ -37,8 +42,10 @@ export class QualificationService
   }
 
   // HTTP call to create qualifications
-  public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): void {
-    this.tokenService.getToken().then((token: string) => {
+  public post(skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): void
+  {
+    this.tokenService.getToken().then((token: string) =>
+    {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
@@ -48,12 +55,14 @@ export class QualificationService
       };
 
       this.http.post<Qualification>('http://localhost:8089/qualifications', body, {headers}).subscribe(
-        (qualification) => {
+        (qualification) =>
+        {
           const currentQualifications = this.qualificationsSubject.value;
           this.qualificationsSubject.next([...currentQualifications, qualification]);
           if (onSuccess) onSuccess(qualification);
         },
-        (error) => {
+        (error) =>
+        {
           error.payload = body;
           if (onError) onError(error);
         }
@@ -62,8 +71,10 @@ export class QualificationService
   }
 
   // HTTP call to update qualifications
-  public put(skillId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null {
-    this.tokenService.getToken().then((token: string) => {
+  public put(skillId: number, skill: string, onSuccess?: (qualification: Qualification) => void, onError?: (error: any) => void): Qualification | null
+  {
+    this.tokenService.getToken().then((token: string) =>
+    {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
@@ -73,11 +84,13 @@ export class QualificationService
       };
 
       this.http.put<Qualification>(`http://localhost:8089/qualifications/${skillId}`, body, {headers}).subscribe(
-        (qualification) => {
+        (qualification) =>
+        {
           if (onSuccess) onSuccess(qualification);
           return qualification;
         },
-        (error) => {
+        (error) =>
+        {
           error.parameters = {skillId: skillId};
           error.payload = body;
           if (onError) onError(error);
@@ -88,18 +101,22 @@ export class QualificationService
   }
 
 // HTTP call to delete a qualification
-  public delete(skillId: number, onSuccess?: () => void, onError?: (error: any) => void): void {
-    this.tokenService.getToken().then((token: string) => {
+  public delete(skillId: number, onSuccess?: () => void, onError?: (error: any) => void): void
+  {
+    this.tokenService.getToken().then((token: string) =>
+    {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
 
       this.http.delete<void>(`http://localhost:8089/qualifications/${skillId}`, {headers})
         .subscribe(
-          () => {
+          () =>
+          {
             if (onSuccess) onSuccess();
           },
-          (error) => {
+          (error) =>
+          {
             error.parameters = {skillId: skillId};
             if (onError) onError(error);
           }
@@ -108,7 +125,8 @@ export class QualificationService
   }
 
   // Get the observable that components can subscribe to
-  getQualifications(): Observable<Qualification[]> {
+  getQualifications(): Observable<Qualification[]>
+  {
     return this.qualificationsSubject.asObservable();
   }
 }

@@ -11,12 +11,9 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
   templateUrl: './busy.component.html',
   styleUrl: './busy.component.css'
 })
-export class BusyComponent {
-
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string }) {
-
+export class BusyComponent
+{
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string })
+  {
   }
-
-
 }
