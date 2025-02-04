@@ -4,12 +4,12 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogClose,
-  MatDialogContent, MatDialogRef,
+  MatDialogContent,
+  MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Qualification} from "../../Qualification";
 import {Employee} from "../../Employee";
@@ -19,18 +19,15 @@ import {closeBusyDialog, openBusyDialog, openMessageDialog, openToast} from "../
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MatButton} from "@angular/material/button";
 
-
 @Component({
   selector: 'app-qualification',
   standalone: true,
   imports: [
     MatDialogContent,
     MatDialogTitle,
-    MatError,
     MatFormField,
     MatInput,
     MatLabel,
-    NgIf,
     ReactiveFormsModule,
     FontAwesomeModule,
     MatButton,
@@ -42,8 +39,8 @@ import {MatButton} from "@angular/material/button";
   styleUrl: './qualification.component.css'
 })
 
-export class QualificationComponent {
-
+export class QualificationComponent
+{
   @Input() qualification: Qualification;
   qualifications: Qualification[];
   employees: Employee[];
@@ -53,32 +50,41 @@ export class QualificationComponent {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<QualificationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { qualification: Qualification, qualifications: Qualification[], employees: Employee[] }) {
+    @Inject(MAT_DIALOG_DATA) public data: {
+      qualification: Qualification,
+      qualifications: Qualification[],
+      employees: Employee[]
+    })
+  {
     this.qualification = Object.assign({}, data.qualification);
     this.employees = data.employees;
     this.qualifications = data.qualifications;
   }
 
-
-
-  saveQualification(qualification: Qualification) {
-    if (qualification.skill === '') {
+  saveQualification(qualification: Qualification)
+  {
+    if (qualification.skill === '')
+    {
       openToast(this.snackBar, `Bitte gib eine Qualifikation an`, true);
       return;
     }
-    if (this.qualifications == null || this.qualifications.find((qual) => {
+    if (this.qualifications == null || this.qualifications.find((qual) =>
+    {
       return qual.skill == qualification.skill;
-    })) {
+    }))
+    {
       openToast(this.snackBar, `Die Qualifikation '${qualification.skill}' existiert schon`, true);
       return;
     }
     openBusyDialog(this.dialog, "Qualifikation wird gespeichert");
-    this.qualificationService.put(qualification.id,qualification.skill, () => { //on success
+    this.qualificationService.put(qualification.id, qualification.skill, () =>
+    { //on success
       closeBusyDialog();
       this.qualificationService.loadData();
       this.dialogRef.close();
       openToast(this.snackBar, `Qualifikation '${qualification.skill}' gespeichert`, false);
-    }, (error) => { //on error
+    }, (error) =>
+    { //on error
       //openToast(this.snackBar, `Fehler beim Speichern der Qualifikation '${qualification}'`, true);
       closeBusyDialog();
       this.qualificationService.loadData();

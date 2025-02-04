@@ -2,21 +2,22 @@
 <div mat-dialog-content>
   <div class="dialog-container">
     <!-- Linke Spalte: Vorname und Nachname -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>ID</mat-label>
-        <input disabled matInput placeholder="ID" [(ngModel)]="qualification.id"/>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Qualifikation</mat-label>
-        <input matInput maxlength="25" placeholder="Qualifikation" [(ngModel)]="qualification.skill" required />
-      </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>ID</mat-label>
+      <input [(ngModel)]="qualification.id" disabled matInput placeholder="ID"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Qualifikation</mat-label>
+      <input [(ngModel)]="qualification.skill" matInput maxlength="25" placeholder="Qualifikation" required/>
+    </mat-form-field>
   </div>
 </div>
 
 <!-- Buttons unten rechts -->
 <div align="end" mat-dialog-actions>
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button (click)="saveQualification(qualification)" [disabled]="!qualification.skill" color="primary" mat-raised-button>
+  <button (click)="saveQualification(qualification)" [disabled]="!qualification.skill" color="primary"
+          mat-raised-button>
     Speichern
   </button>
 </div>

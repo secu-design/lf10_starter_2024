@@ -21,18 +21,18 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent
+{
   employees$: Observable<Employee[]>;
   activeEmployee: Employee | null = null;
 
   // Filter
   filteredEmployees$: Observable<Employee[]>; // Filtered employee list
-  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
-
   // Icons
   protected readonly faEdit = faEdit;
   protected readonly faAdd = faAdd;
   protected readonly faTrash = faTrash;
+  private searchTerm$ = new BehaviorSubject<string>(''); // Search term observable
 
   constructor(
     private employeeService: EmployeeService,
@@ -42,7 +42,8 @@ export class EmployeeListComponent {
   {
     this.employees$ = this.employeeService.getEmployees();
     this.filteredEmployees$ = combineLatest([this.employees$, this.searchTerm$]).pipe(
-      map(([employees, searchTerm]) => {
+      map(([employees, searchTerm]) =>
+      {
         const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
         return employees.filter(employee =>
           filters.every(filter =>
@@ -54,20 +55,24 @@ export class EmployeeListComponent {
     );
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
     this.employeeService.loadData();
-    this.employeeDetailService.getSelectedEmployeeObservable().subscribe((employee) => {
+    this.employeeDetailService.getSelectedEmployeeObservable().subscribe((employee) =>
+    {
       let button = document.getElementById('edit-button') as HTMLButtonElement;
       button.disabled = employee == null || employee.id == -1;
       this.activeEmployee = employee;
     });
   }
 
-  setActiveEmployee(employee: Employee) {
+  setActiveEmployee(employee: Employee)
+  {
     this.employeeDetailService.setSelectedEmployee(employee);
   }
 
-  addEmployee() {
+  addEmployee()
+  {
     this.dialog.open(EditComponent, {
       width: '1000px',
       height: '500px',
@@ -76,7 +81,8 @@ export class EmployeeListComponent {
     });
   }
 
-  editEmployee() {
+  editEmployee()
+  {
     this.dialog.open(EditComponent, {
       width: '1000px',
       height: '500px',
@@ -85,15 +91,19 @@ export class EmployeeListComponent {
     });
   }
 
-  removeEmployee() {
-    if (this.activeEmployee && this.activeEmployee.id !== undefined) {
+  removeEmployee()
+  {
+    if (this.activeEmployee && this.activeEmployee.id !== undefined)
+    {
       let name = this.activeEmployee.firstName + ' ' + this.activeEmployee.lastName;
       openBusyDialog(this.dialog, "Mitarbeiter wird gelöscht");
-      this.employeeService.delete(this.activeEmployee.id, () => { //on success
+      this.employeeService.delete(this.activeEmployee.id, () =>
+      { //on success
         closeBusyDialog();
         openToast(this.snackBar, `Mitarbeiter '${name}' gelöscht`, false);
         this.employeeService.loadData();
-      }, (error) => { //on error
+      }, (error) =>
+      { //on error
         closeBusyDialog();
         openMessageDialog(this.dialog, error);
       });
@@ -101,7 +111,8 @@ export class EmployeeListComponent {
     this.employeeDetailService.setSelectedEmployee(new Employee());
   }
 
-  onSearchChange(event: Event) {
+  onSearchChange(event: Event)
+  {
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
   }

@@ -5,21 +5,23 @@ import {SuccessDialogComponent} from "../popUps/success-dialog/success-dialog.co
 import {BusyComponent} from "../popUps/busy/busy.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
-
 /**
  * Displays a dialog  that informs the user about an error or success of an api call
  * @param dialog
  * @param returnValue - value returned by the api method or a simple message string
  */
-export function openMessageDialog(dialog: MatDialog, returnValue: any){
-  if(returnValue instanceof HttpErrorResponse){
+export function openMessageDialog(dialog: MatDialog, returnValue: any)
+{
+  if (returnValue instanceof HttpErrorResponse)
+  {
     dialog.open(ErrorDialogComponent, {
       width: '800px',
       data: {
         error: returnValue, // Optional, only for errors
       },
     });
-  }else if(typeof(returnValue) === "string") {
+  } else if (typeof (returnValue) === "string")
+  {
     dialog.open(SuccessDialogComponent, {
       width: '600px',
       data: {
@@ -29,7 +31,8 @@ export function openMessageDialog(dialog: MatDialog, returnValue: any){
   }
 }
 
-export function openToast(snackBar: MatSnackBar, message: string, isError: boolean = false, duration: number = 3000) {
+export function openToast(snackBar: MatSnackBar, message: string, isError: boolean = false, duration: number = 3000)
+{
   snackBar.open(message, 'Close', {
     duration,
     panelClass: [isError ? 'toast-error' : 'toast-success'],
@@ -38,20 +41,23 @@ export function openToast(snackBar: MatSnackBar, message: string, isError: boole
   });
 }
 
-
 let loadingDialogRef: MatDialogRef<BusyComponent> | null = null;
 
-export function openBusyDialog(dialog: MatDialog, message: string = 'Loading...') {
-  if (!loadingDialogRef) {
+export function openBusyDialog(dialog: MatDialog, message: string = 'Loading...')
+{
+  if (!loadingDialogRef)
+  {
     loadingDialogRef = dialog.open(BusyComponent, {
       disableClose: true, // Prevent users from closing the dialog
-      data: { message },
+      data: {message},
     });
   }
 }
 
-export function closeBusyDialog() {
-  if (loadingDialogRef) {
+export function closeBusyDialog()
+{
+  if (loadingDialogRef)
+  {
     loadingDialogRef.close();
     loadingDialogRef = null;
   }

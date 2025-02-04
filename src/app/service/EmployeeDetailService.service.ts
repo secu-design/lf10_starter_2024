@@ -10,15 +10,18 @@ export class EmployeeDetailService
   private selectedEmployeeSubject = new BehaviorSubject<Employee | null>(null);
   selectedEmployee$ = this.selectedEmployeeSubject.asObservable();
 
-  setSelectedEmployee(employee: Employee) {
+  setSelectedEmployee(employee: Employee)
+  {
     this.selectedEmployeeSubject.next(employee);
   }
 
-  getSelectedEmployee() {
+  getSelectedEmployee()
+  {
     return this.selectedEmployeeSubject.getValue();
   }
 
-  getSelectedEmployeeObservable() {
+  getSelectedEmployeeObservable()
+  {
     return this.selectedEmployeeSubject;
   }
 }

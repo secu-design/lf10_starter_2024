@@ -8,10 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {Employee} from "../../Employee";
 import {EmployeeDetailService} from "../../service/EmployeeDetailService.service";
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule,} from "@angular/forms";
 import {QualificationService} from "../../service/qualification.service";
 import {Qualification} from "../../Qualification";
 import {BehaviorSubject, combineLatest, map, Observable} from "rxjs";
@@ -39,13 +36,13 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrl: './edit.component.css'
 })
 
-export class EditComponent {
-
+export class EditComponent
+{
   @Input() employee: Employee = new Employee();
   qualifications$: Observable<Qualification[]>;
   isEdit: boolean;
-  private searchTerm$ = new BehaviorSubject<string>('');
   filteredQualifications$: Observable<Qualification[]>;
+  private searchTerm$ = new BehaviorSubject<string>('');
 
   constructor(
     private employeeDetailService: EmployeeDetailService,
@@ -55,15 +52,17 @@ export class EditComponent {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean }
-  ) {
+  )
+  {
     this.isEdit = data.isEdit;
-    let receivedEmployee  = this.isEdit && this.employeeDetailService.getSelectedEmployee() != null ? <Employee>this.employeeDetailService.getSelectedEmployee() : new Employee();
+    let receivedEmployee = this.isEdit && this.employeeDetailService.getSelectedEmployee() != null ? <Employee>this.employeeDetailService.getSelectedEmployee() : new Employee();
 
     this.employee = this.isEdit ? Object.assign({}, receivedEmployee) : new Employee();
     this.qualifications$ = this.qualificationService.getQualifications();
 
     this.filteredQualifications$ = combineLatest([this.qualifications$, this.searchTerm$]).pipe(
-      map(([qualifications, searchTerm]) => {
+      map(([qualifications, searchTerm]) =>
+      {
         const filters = searchTerm.toLowerCase().split(',').map(f => f.trim());
         return qualifications.filter(qualification =>
           filters.every(filter =>
@@ -72,15 +71,18 @@ export class EditComponent {
     );
   }
 
-  onCreate(): void {
+  onCreate(): void
+  {
     openBusyDialog(this.dialog, "Mitarbeiter wird angelegt");
-    this.employeeService.post(this.employee, (employee) => { //on success
+    this.employeeService.post(this.employee, (employee) =>
+    { //on success
       closeBusyDialog();
       //openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich angelegt!`);
       openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' angelegt`, false);
       this.employeeDetailService.setSelectedEmployee(employee);
       this.employeeService.loadData();
-    }, (error) => { //on error
+    }, (error) =>
+    { //on error
       closeBusyDialog();
       openMessageDialog(this.dialog, error);
       //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht angelegt werden`, true);
@@ -88,18 +90,22 @@ export class EditComponent {
     this.dialogRef.close();
   }
 
-  onSave(): void {
+  onSave(): void
+  {
     openBusyDialog(this.dialog, "Mitarbeiter wird gespeichert");
-    this.employeeService.put(this.employee.id, this.employee, () => { //on success
+    this.employeeService.put(this.employee.id, this.employee, () =>
+    { //on success
       closeBusyDialog();
       //openMessageDialog(this.dialog, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' erfolgreich geändert!`);
       openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' geändert`, false);
-      this.employeeService.loadData((list) => {
+      this.employeeService.loadData((list) =>
+      {
         const selectedEmployee = list.find((e) => this.employee.id === e.id);
         console.log(selectedEmployee);
         this.employeeDetailService.setSelectedEmployee(selectedEmployee || new Employee());
       });
-    }, (error) => { //on error
+    }, (error) =>
+    { //on error
       closeBusyDialog();
       openMessageDialog(this.dialog, error);
       //openToast(this.snackBar, `Mitarbeiter '${this.employee.firstName} ${this.employee.lastName}' konnte nicht geändert werden`, true);
@@ -107,19 +113,23 @@ export class EditComponent {
     this.dialogRef.close();
   }
 
-  validatePlz(){
-    setTimeout(() => {
+  validatePlz()
+  {
+    setTimeout(() =>
+    {
       let text = "";
       if (this.employee != null && this.employee.postcode != null) text = this.employee?.postcode?.replace(/\D/g, '');
       this.employee.postcode = text;
     }, 0);
   }
 
-  compareQualifications(qual1: Qualification, qual2: Qualification): boolean {
+  compareQualifications(qual1: Qualification, qual2: Qualification): boolean
+  {
     return qual1 && qual2 ? qual1.skill === qual2.skill : false;
   }
 
-  onSearchChange(event: Event) {
+  onSearchChange(event: Event)
+  {
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
   }

@@ -26,23 +26,23 @@ import {MatButton} from "@angular/material/button";
   templateUrl: './error-dialog.component.html',
   styleUrl: './error-dialog.component.css'
 })
-export class ErrorDialogComponent {
-
+export class ErrorDialogComponent
+{
   protected error: HttpErrorResponse;
   protected errorMessage: string = "";
   protected showTechnicalDetails = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { error: HttpErrorResponse, message: string }
-  ) {
-      console.log(data.error);
-      this.error = data.error;
-      this.errorMessage = data.error.error.message;
+  )
+  {
+    console.log(data.error);
+    this.error = data.error;
+    this.errorMessage = data.error.error.message;
   }
 
-
-  toggleTechnicalDetails() {
+  toggleTechnicalDetails()
+  {
     this.showTechnicalDetails = !this.showTechnicalDetails;
   }
-
 }

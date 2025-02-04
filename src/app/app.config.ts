@@ -1,10 +1,10 @@
 import {APP_INITIALIZER, ApplicationConfig, importProvidersFrom} from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {provideRouter} from '@angular/router';
 
-import { routes } from './app.routes';
+import {routes} from './app.routes';
 import {KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService} from "keycloak-angular";
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
 
 export const initializeKeycloak = (keycloak: KeycloakService) => async () =>
   keycloak.init({
@@ -22,7 +22,8 @@ export const initializeKeycloak = (keycloak: KeycloakService) => async () =>
     },
   });
 
-function initializeApp(keycloak: KeycloakService): () => Promise<boolean> {
+function initializeApp(keycloak: KeycloakService): () => Promise<boolean>
+{
   return () => initializeKeycloak(keycloak)();
 }
 
